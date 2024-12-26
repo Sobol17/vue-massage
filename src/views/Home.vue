@@ -21,7 +21,7 @@ const router = useRouter()
 </script>
 
 <template>
-  <Header />
+<Header />
 <main class="rounded-t-[24px] bg-white p-4 mt-[60px] h-full">
 
   <div class="relative">
@@ -32,7 +32,7 @@ const router = useRouter()
     <div class="flex items-center gap-x-2 pt-10">
       <h1 class="text-headline">{{ officeStore.activeOffice.title }}</h1>
       <button @click="showOfficeModal = true">
-        <IconArrowDown />
+        <IconArrowDown bg />
       </button>
     </div>
     <h3 class="text-body-m-regular text-neutral-500 pt-2">{{ officeStore.activeOffice.address }}</h3>

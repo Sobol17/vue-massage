@@ -6,7 +6,7 @@ import Dates from "@/views/Dates.vue";
 import Services from "@/views/Services.vue";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(process.env.NODE_ENV === 'production' ? '/vue-massage/' : '/'),
   routes: [
     {
       path: '/',
