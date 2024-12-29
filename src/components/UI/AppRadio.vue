@@ -16,6 +16,7 @@ const props = defineProps({
   },
   disabled: Boolean,
   sm: Boolean,
+  label: Boolean
 });
 
 function handleCheckboxChange(event) {
@@ -36,13 +37,13 @@ onMounted(() => {
       :disabled="props.disabled"
       class="response__form-checkbox"
       :name="props.name"
-      :checked="props.modelValue"
+      :checked="props.modelValue === props.value"
       @change="handleCheckboxChange"
     >
     <span class="response__form-checkbox-view response__form-checkbox-personalData">
       <icon-radio class="response__form-checkbox-icon"/>
     </span>
-    <p class="response__form-text">{{ props.name }}</p>
+    <p v-if="label" class="response__form-text">{{ props.name }}</p>
   </label>
 </template>
 <style scoped>

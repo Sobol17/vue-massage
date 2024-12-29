@@ -14,7 +14,8 @@ const route = useRoute()
 .app-wrapper {
   display: block;
   max-width: 600px;
-  height: 90vh;
+  min-height: 100vh;
+  height: 100%;
   margin: 0 auto;
 }
 </style>

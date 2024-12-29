@@ -2,19 +2,23 @@
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import AppRadio from "@/components/UI/AppRadio.vue";
 import IconService from "@/components/icons/IconService.vue";
-import {ref} from "vue";
 import SpecialistCard from "@/components/SpecialistCard.vue";
 import {useSpecialistsStore} from "@/stores/specialists.js";
+import FixedBasket from "@/components/FixedBasket.vue";
+import {useCartStore} from "@/stores/cart.js";
+import AppButton from "@/components/UI/AppButton.vue";
+import {useRouter} from "vue-router";
 
-const check = ref(false)
 
 const specialistsStore = useSpecialistsStore()
+const cartStore = useCartStore()
 
+const router = useRouter()
 </script>
 
 <template>
-<main>
-  <div class="bg-white p-4">
+<main class="bg-white h-[100vh] relative">
+  <div class="p-4">
     <Breadcrumb />
 
     <h1 class="text-headline mt-4">Выбрать специалиста</h1>
@@ -25,7 +29,8 @@ const specialistsStore = useSpecialistsStore()
       </div>
       <p class="text-body-m-regular flex-grow">Любой специалист</p>
       <AppRadio
-        v-model="check"
+        :value="0"
+        v-model="cartStore.chosenSpecialistId"
       />
     </div>
 
@@ -38,12 +43,22 @@ const specialistsStore = useSpecialistsStore()
         :img="specialist.img"
         :reviews="specialist.reviews"
         :dates="specialist.dates"
-        :selected="specialist.selected"
-        @setActiveDate="specialistsStore.changeActiveDate"
-        @selectSpecialist="specialistsStore.selectSpecialist"
+        @setActiveDate=""
+        @selectSpecialist=""
       />
     </div>
   </div>
+
+  <FixedBasket
+    btnLink="/dates"
+    v-if="cartStore.serviceInBasketCount > 0 && cartStore.chosenSpecialistId"
+  />
+
+  <div v-if="cartStore.chosenSpecialistId !== null && cartStore.serviceInBasketCount === 0" class="mt-4 absolute bottom-6 left-4 right-4">
+    <AppButton text="Выбрать услугу" @click="router.push('/services')" class="w-full"/>
+  </div>
+
+
 </main>
 </template>
 

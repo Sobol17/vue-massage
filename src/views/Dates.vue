@@ -6,9 +6,8 @@ import TimeAccordion from "@/components/TimeAccordion.vue";
 import TimeChip from "@/components/UI/TimeChip.vue";
 import AppButton from "@/components/UI/AppButton.vue";
 import {useRouter} from "vue-router";
-
-const date = ref(null);
-const selectedTime = ref(null);
+import {useCartStore} from "@/stores/cart.js";
+const cartStore = useCartStore()
 
 const router = useRouter()
 </script>
@@ -17,22 +16,22 @@ const router = useRouter()
 <main>
   <div class="bg-white p-4 h-[100vh] relative">
     <Breadcrumb />
-    <DatePicker v-model="date" />
+    <DatePicker v-model="cartStore.chosenDate" />
 
     <div class="mt-6">
       <TimeAccordion class="py-3" title="Утро">
         <div class="flex gap-2 mt-3">
           <TimeChip
             time="9:00"
-            v-model="selectedTime"
+            v-model="cartStore.chosenTime"
           />
           <TimeChip
             time="10:00"
-            v-model="selectedTime"
+            v-model="cartStore.chosenTime"
           />
           <TimeChip
             time="11:00"
-            v-model="selectedTime"
+            v-model="cartStore.chosenTime"
           />
         </div>
       </TimeAccordion>
@@ -41,15 +40,15 @@ const router = useRouter()
         <div class="flex gap-2 mt-3">
           <TimeChip
             time="12:00"
-            v-model="selectedTime"
+            v-model="cartStore.chosenTime"
           />
           <TimeChip
             time="13:00"
-            v-model="selectedTime"
+            v-model="cartStore.chosenTime"
           />
           <TimeChip
             time="14:00"
-            v-model="selectedTime"
+            v-model="cartStore.chosenTime"
           />
         </div>
       </TimeAccordion>
@@ -58,24 +57,25 @@ const router = useRouter()
         <div class="flex gap-2 mt-3">
           <TimeChip
             time="15:00"
-            v-model="selectedTime"
+            v-model="cartStore.chosenTime"
           />
           <TimeChip
             time="16:00"
-            v-model="selectedTime"
+            v-model="cartStore.chosenTime"
           />
           <TimeChip
             time="17:00"
-            v-model="selectedTime"
+            v-model="cartStore.chosenTime"
           />
         </div>
       </TimeAccordion>
     </div>
     <div class="absolute bottom-6 left-0 right-0 px-4">
       <AppButton
+        v-if="cartStore.chosenDate"
         class="w-full"
-        text="Выбрать услугу"
-        @click="router.push('/')"
+        :text="cartStore.cartButtonInfo.title"
+        @click="router.push('/services')"
       />
     </div>
   </div>

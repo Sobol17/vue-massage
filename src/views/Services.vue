@@ -4,17 +4,19 @@ import CategoryChip from "@/components/UI/CategoryChip.vue";
 import ServiceCard from "@/components/ServiceCard.vue";
 import {useServiceStore} from "@/stores/services.js";
 import AppInput from "@/components/UI/AppInput.vue";
+import FixedBasket from "@/components/FixedBasket.vue";
+import {useCartStore} from "@/stores/cart.js";
 
 const serviceStore = useServiceStore()
+const cartStore = useCartStore()
 </script>
 
 <template>
   <main>
-    <div class="bg-white p-4 h-full relative">
-      <Breadcrumb class="sticky top-0 bg-white pt-4 z-[100]" />
+    <div class="bg-white h-full p-4">
+      <Breadcrumb class="sticky top-0 bg-white pt-4 z-[10]"/>
       <h1 class="text-headline pt-6">Выбрать услугу</h1>
-
-      <div class="scrollbar sticky top-[64px] bg-white z-[100] pt-3">
+      <div class="scrollbar sticky top-[64px] bg-white z-[10] pt-3">
         <div class="flex gap-x-2 max-w-full min-w-max">
           <CategoryChip
             v-for="item in serviceStore.categories"
@@ -32,7 +34,7 @@ const serviceStore = useServiceStore()
       />
 
       <section :id="service.category" v-for="service in serviceStore.filteredServices">
-        <h3 class="text-headline py-6">{{service.category}}</h3>
+        <h3 class="text-headline py-6">{{ service.category }}</h3>
         <div class="flex flex-col gap-y-6">
           <ServiceCard
             v-for="item in service.items"
@@ -47,6 +49,13 @@ const serviceStore = useServiceStore()
       </section>
 
     </div>
+
+    <FixedBasket
+      btnText="Выбрать специалиста"
+      btnLink="/specialists"
+      v-if="cartStore.serviceInBasketCount > 0"
+    />
+
   </main>
 </template>
 

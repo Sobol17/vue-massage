@@ -2,36 +2,32 @@
 import {computed, ref} from "vue";
 import AppCheckbox from "@/components/UI/AppCheckbox.vue";
 import {useServiceStore} from "@/stores/services.js";
+import formatPrice from "../utils/formatPrice.js";
+import formatTime from "../utils/formatTime.js";
+import {useCartStore} from "@/stores/cart.js";
 
 const serviceStore = useServiceStore()
+const cartStore = useCartStore()
 
 const props = defineProps({
   id: Number,
   img: String,
   title: String,
   description: String,
-  time: String,
-  price: String,
+  time: Number,
+  price: Number,
   selected: Boolean
 })
 
 const selected = computed(() => {
-  return serviceStore.chosenServices.some(item => item.id === props.id)
+  return cartStore.chosenServices.some(item => item.id === props.id)
 })
-
-const selectService = () => {
-  if (serviceStore.chosenServices.includes(props)) {
-    serviceStore.chosenServices = serviceStore.chosenServices.filter(item => item.id !== props.id)
-  } else {
-    serviceStore.chosenServices.push(props);
-  }
-}
 
 const opened = ref(false);
 </script>
 
 <template>
-<div class="cursor-pointer" @click="selectService">
+<div class="cursor-pointer" @click="cartStore.addServiceToCart(props)">
   <img
     class="w-full object-cover h-[240px] rounded-[16px] mb-3"
     :src="img"
@@ -43,7 +39,7 @@ const opened = ref(false);
       <div class="flex items-start gap-x-2 text-body-s-regular text-neutral-500 mb-2 pr-6">
         <div
           :class="[ 'text-ellipsis overflow-hidden', opened ? 'line-clamp-100' : 'line-clamp-1']"
-        >{{time}} · {{description}}</div>
+        >{{formatTime(time)}} · {{description}}</div>
         <span
           v-if="!opened"
           @click="opened = !opened"
@@ -53,11 +49,11 @@ const opened = ref(false);
     </div>
     <AppCheckbox
       v-model="selected"
-      @update:modelValue="selectService"
+      @update:modelValue="cartStore.addServiceToCart(props)"
     />
   </div>
 
-  <div class="text-body-m-medium">{{price}}</div>
+  <div class="text-body-m-medium">{{formatPrice(price)}}</div>
 </div>
 </template>
 

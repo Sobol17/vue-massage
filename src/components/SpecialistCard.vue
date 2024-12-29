@@ -5,6 +5,8 @@ import ReviewStars from "@/components/ReviewStars.vue";
 import AppRadio from "@/components/UI/AppRadio.vue";
 import IconInfo from "@/components/icons/IconInfo.vue";
 import AppChip from "@/components/UI/AppChip.vue";
+import {computed} from "vue";
+import {useCartStore} from "@/stores/cart.js";
 
 const props = defineProps({
   id: Number,
@@ -12,24 +14,30 @@ const props = defineProps({
   prof: String,
   img: String,
   reviews: Number,
-  dates: Array,
-  selected: Boolean
+  dates: Array
 })
 
-const emit = defineEmits(['setActiveDate', 'selectSpecialist'])
+const cartStore = useCartStore()
 
-const setActiveDate = (id, date) => {
-  emit('setActiveDate', id, date)
+const selectDate = (time) => {
+  cartStore.chosenDate = {
+    specialistId: props.id,
+    date: props.dates[0].date,
+    time: time
+  }
+
+  cartStore.chosenSpecialistId = props.id
 }
 
-const selectSpecialist = () => {
-  emit('selectSpecialist', props.id)
+const activeDate = (time) => {
+  return cartStore.chosenDate?.specialistId === props.id && cartStore.chosenDate?.time === time
 }
+
 </script>
 
 <template>
 <div>
-  <div class="flex items-start gap-x-3">
+  <div class="flex items-start gap-x-3 cursor-pointer" @click="cartStore.chosenSpecialistId = props.id">
     <Avatar
       image="https://placehold.jp/3d4070/ffffff/150x150.png"
       class="size-[48px]"
@@ -45,20 +53,20 @@ const selectSpecialist = () => {
     <div class="flex gap-x-3 ml-auto self-center">
       <IconInfo class="text-neutral-500" />
       <AppRadio
-        :model-value="selected"
+        name="spec"
         :value="id"
-        @update:modelValue="selectSpecialist"
+        v-model="cartStore.chosenSpecialistId"
       />
     </div>
   </div>
-  <div class="text-body-m-regular text-neutral-500 mt-2">Ближайшее время для записи:</div>
+  <div class="text-body-m-regular text-neutral-500 mt-2">Ближайшее время для записи: {{dates[0].date}}</div>
   <div class="flex items-center flex-wrap gap-x-2 mt-2">
     <AppChip
-      v-for="date in dates"
-      :key="date"
-      :title="date.title"
-      :active="date.active"
-      @click="setActiveDate(id, date)"
+      v-for="time in dates[0].times"
+      :key="time"
+      :title="time"
+      :active="activeDate(time)"
+      @click="selectDate(time)"
     />
   </div>
 </div>
