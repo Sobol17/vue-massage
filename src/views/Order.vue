@@ -34,7 +34,8 @@ const sendForm = () => {
       time: cartStore.chosenDate.time
     }
 
-    orderStore.sendOrderForm(requestData);
+    orderStore.sendOrderForm(requestData)
+    router.push('/thanks')
   } else {
     console.log('validation error')
   }
