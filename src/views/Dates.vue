@@ -75,7 +75,7 @@ const router = useRouter()
         v-if="cartStore.chosenDate"
         class="w-full"
         :text="cartStore.cartButtonInfo.title"
-        @click="router.push('/services')"
+        @click="router.push('/specialists')"
       />
     </div>
   </div>

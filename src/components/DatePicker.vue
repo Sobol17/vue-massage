@@ -218,7 +218,7 @@ const nextMonth = () => {
 
 .weekdays,
 .days {
-  @apply grid grid-cols-7 gap-x-[48px] gap-y-3 text-center;
+  @apply grid grid-cols-7 gap-x-[48px] sm:gap-x-3 gap-y-3 text-center;
 }
 
 .days span {
