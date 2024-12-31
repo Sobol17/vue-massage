@@ -1,5 +1,4 @@
 <script setup>
-import {onMounted, watch} from "vue";
 import IconSearch from "@/components/icons/IconSearch.vue";
 
 const emits = defineEmits(['update:modelValue', 'button-click']);
@@ -19,6 +18,7 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  error: Boolean,
   disabled: Boolean,
   search: Boolean,
 });
@@ -30,6 +30,7 @@ const props = defineProps({
       <IconSearch v-if="search" class="text-neutral-500 absolute top-1/2 right-3 -translate-y-1/2" />
       <!--  НЕ УБИРАТЬ placeholder=" "  -->
       <input
+        :class="{ 'input--error': error }"
         :type="type"
         placeholder=" "
         :name="name"
@@ -37,7 +38,7 @@ const props = defineProps({
         :disabled="disabled"
         @input="$emit('update:modelValue', value)"
       />
-      <label :for="id" class="input__label">{{ placeholder }}</label>
+      <label class="input__label" :class="{ 'label--error': error }">{{ placeholder }}</label>
     </div>
   </div>
 </template>
@@ -102,5 +103,13 @@ const props = defineProps({
       font-weight: 500;
     }
   }
+}
+
+.input--error {
+  border: 1px solid #e51414 !important;
+}
+
+.label--error {
+  color: #e51414;
 }
 </style>

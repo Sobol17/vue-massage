@@ -7,6 +7,8 @@ import IconInfo from "@/components/icons/IconInfo.vue";
 import AppChip from "@/components/UI/AppChip.vue";
 import {computed} from "vue";
 import {useCartStore} from "@/stores/cart.js";
+import IconPen from "@/components/icons/IconPen.vue";
+import router from "@/router/index.js";
 
 const props = defineProps({
   id: Number,
@@ -14,7 +16,9 @@ const props = defineProps({
   prof: String,
   img: String,
   reviews: Number,
-  dates: Array
+  dates: Array,
+  inOrder: Boolean,
+  inSuccess: Boolean,
 })
 
 const cartStore = useCartStore()
@@ -26,7 +30,7 @@ const selectDate = (time) => {
     time: time
   }
 
-  cartStore.chosenSpecialistId = props.id
+  cartStore.chosenSpecialist = props
 }
 
 const activeDate = (time) => {
@@ -37,30 +41,34 @@ const activeDate = (time) => {
 
 <template>
 <div>
-  <div class="flex items-start gap-x-3 cursor-pointer" @click="cartStore.chosenSpecialistId = props.id">
+  <div class="flex items-start gap-x-3 cursor-pointer" @click="cartStore.chosenSpecialist = props">
     <Avatar
       image="https://placehold.jp/3d4070/ffffff/150x150.png"
       class="size-[48px]"
     />
     <div class="flex flex-col gap-y-1">
       <div class="text-body-m-regular">{{name}}</div>
-      <div class="text-body-m-regular text-neutral-500">{{prof}}</div>
+      <div class="text-body-s-regular text-neutral-500">{{prof}}</div>
       <div class="flex items-center gap-x-1">
         <ReviewStars :count="reviews" />
         <p class="text-body-s-regular text-neutral-500">{{reviews}} {{getReviewWord(reviews)}}</p>
       </div>
     </div>
-    <div class="flex gap-x-3 ml-auto self-center">
+    <div v-if="!inOrder" class="flex gap-x-3 ml-auto self-center">
       <IconInfo class="text-neutral-500" />
       <AppRadio
+        v-if="!inSuccess"
         name="spec"
-        :value="id"
-        v-model="cartStore.chosenSpecialistId"
+        :value="props"
+        v-model="cartStore.chosenSpecialist"
       />
     </div>
+    <RouterLink to="/specialists" v-else class="ml-auto">
+      <IconPen class="text-neutral-500" />
+    </RouterLink>
   </div>
-  <div class="text-body-m-regular text-neutral-500 mt-2">Ближайшее время для записи: {{dates[0].date}}</div>
-  <div class="flex items-center flex-wrap gap-x-2 mt-2">
+  <div v-if="!inOrder && !inSuccess" class="text-body-m-regular text-neutral-500 mt-2">Ближайшее время для записи: {{dates[0].date}}</div>
+  <div v-if="!inOrder" class="flex items-center flex-wrap gap-x-2 mt-2">
     <AppChip
       v-for="time in dates[0].times"
       :key="time"

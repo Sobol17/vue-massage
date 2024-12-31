@@ -5,7 +5,10 @@ export default {
       transparent: 'transparent',
       white: '#fff',
       green: '#689675',
+      red: '#e51414',
+      'green-txt': '#219C2B',
       'green-dark': '#557C60',
+      'green-light': '#E9F7E9',
       gold: '#BBAB70',
       yellow: '#fcce2c',
       black: '#141414',
@@ -155,5 +158,10 @@ export default {
       },
     },
     plugins: [],
+    screens: {
+      'sm': {
+        'max': '620px'
+      },
+    }
   },
 };

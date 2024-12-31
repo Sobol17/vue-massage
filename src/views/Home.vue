@@ -22,8 +22,7 @@ const router = useRouter()
 
 <template>
 <Header />
-<main class="rounded-t-[24px] bg-white p-4 mt-[60px] h-full">
-
+<main class="rounded-t-[24px] bg-white p-4 mt-[60px] h-[90vh] sm:mx-2">
   <div class="relative">
     <Avatar
       class="absolute left-0 top-[-56px] size-[80px]"
@@ -63,8 +62,8 @@ const router = useRouter()
 
   <SelectionRow
     class="mt-4"
-    title="Выбрать услугу"
-    link="/"
+    title="Оформление заказа"
+    link="/order"
   >
     <IconWallet />
   </SelectionRow>

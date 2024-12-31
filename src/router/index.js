@@ -4,6 +4,8 @@ import Offices from "@/views/Offices.vue";
 import Specialist from "@/views/Specialist.vue";
 import Dates from "@/views/Dates.vue";
 import Services from "@/views/Services.vue";
+import Order from "@/views/Order.vue";
+import SuccessOrder from "@/views/SuccessOrder.vue";
 
 const router = createRouter({
   history: createWebHistory(process.env.NODE_ENV === 'production' ? '/vue-massage/' : '/'),
@@ -32,6 +34,16 @@ const router = createRouter({
       path: '/services',
       name: 'services',
       component: Services,
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: Order,
+    },
+    {
+      path: '/thanks',
+      name: 'thanks',
+      component: SuccessOrder,
     },
   ],
 })

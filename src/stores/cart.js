@@ -5,7 +5,7 @@ export const useCartStore = defineStore('cart', () => {
   // логика работы с корзиной
   const chosenServices = ref([]);
 
-  const chosenSpecialistId = ref(null)
+  const chosenSpecialist = ref(null)
 
   const chosenDate = ref(null)
   const chosenTime = ref(null)
@@ -37,12 +37,12 @@ export const useCartStore = defineStore('cart', () => {
   });
 
   const cartButtonInfo = computed(() => {
-    if (serviceInBasketCount.value > 0 && chosenSpecialistId.value !== null && chosenDate.value !== null) {
+    if (serviceInBasketCount.value > 0 && chosenSpecialist.value !== null && chosenDate.value !== null) {
       return {
         title: 'Готово',
-        link: '/'
+        link: '/order'
       }
-    } else if (serviceInBasketCount.value > 0 && chosenSpecialistId.value !== null && chosenDate.value === null) {
+    } else if (serviceInBasketCount.value > 0 && chosenSpecialist.value !== null && chosenDate.value === null) {
       return {
         title: 'Выбрать дату и время',
         link: '/dates'
@@ -62,7 +62,7 @@ export const useCartStore = defineStore('cart', () => {
     cartTotalTime,
     removeServiceFromCart,
     chosenServices,
-    chosenSpecialistId,
+    chosenSpecialist,
     chosenDate,
     chosenTime,
     cartButtonInfo
