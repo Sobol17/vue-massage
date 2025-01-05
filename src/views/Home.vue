@@ -21,8 +21,7 @@ const router = useRouter()
 </script>
 
 <template>
-<Header />
-<main class="rounded-t-[24px] bg-white p-4 mt-[60px] h-[90vh] sm:mx-2">
+<main class="rounded-t-[24px] bg-white p-4 mt-[60px] h-[100vh] sm:mx-2">
   <div class="relative">
     <Avatar
       class="absolute left-0 top-[-56px] size-[80px]"
@@ -40,33 +39,33 @@ const router = useRouter()
   <div class="flex flex-col gap-y-4 mt-6">
     <SelectionRow
       title="Выбрать специалиста"
-      link="/specialists"
+      link="specialists"
     >
       <IconAccount />
     </SelectionRow>
     <SelectionRow
       title="Выбрать дату"
-      link="/dates"
+      link="dates"
     >
       <IconCalendar />
     </SelectionRow>
     <SelectionRow
       title="Выбрать услуги"
-      link="/services"
+      link="services"
     >
       <IconMore />
     </SelectionRow>
   </div>
 
-  <p class="text-body-m-regular mt-8">Купить</p>
+<!--  <p class="text-body-m-regular mt-8">Купить</p>-->
 
-  <SelectionRow
-    class="mt-4"
-    title="Оформление заказа"
-    link="/order"
-  >
-    <IconWallet />
-  </SelectionRow>
+<!--  <SelectionRow-->
+<!--    class="mt-4"-->
+<!--    title="Оформление заказа"-->
+<!--    link="/order"-->
+<!--  >-->
+<!--    <IconWallet />-->
+<!--  </SelectionRow>-->
 
   <Transition name="fade">
     <OfficeModal v-if="showOfficeModal" @close="showOfficeModal = false">
@@ -74,7 +73,7 @@ const router = useRouter()
         <h2 class="text-headline">{{ officeStore.activeOffice.title }}</h2>
         <h3 class="text-body-m-regular text-neutral-500 pt-2">{{ officeStore.activeOffice.address }}</h3>
         <AppButton text="О филиале" class="mt-8 w-full" @click="$emit('close')" />
-        <AppButton text="Все филиалы" class="mt-3 w-full" @click="router.push('/offices')" />
+        <AppButton text="Все филиалы" class="mt-3 w-full" @click="router.push({name: 'offices'})" />
       </div>
     </OfficeModal>
   </Transition>

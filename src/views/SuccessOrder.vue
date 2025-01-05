@@ -77,7 +77,7 @@ const copyLink = async () => {
         <p class="text-[13px] mt-1 text-center">Добавить в <br> календарь</p>
       </div>
 
-      <RouterLink to="/dates" class="flex flex-col items-center cursor-pointer">
+      <RouterLink to="dates" class="flex flex-col items-center cursor-pointer">
         <div class="size-[50px] rounded-full flex items-center justify-center border border-solid border-neutral-300">
           <IconPathArrow />
         </div>

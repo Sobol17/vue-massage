@@ -55,15 +55,17 @@ const activeDate = (time) => {
       </div>
     </div>
     <div v-if="!inOrder" class="flex gap-x-3 ml-auto self-center">
-      <IconInfo class="text-neutral-500" />
+      <RouterLink :to="`specialists/${id}`">
+        <IconInfo class="text-neutral-500" />
+      </RouterLink>
       <AppRadio
         v-if="!inSuccess"
         name="spec"
-        :value="props"
-        v-model="cartStore.chosenSpecialist"
+        :value="props.id"
+        v-model="cartStore.chosenSpecialist.id"
       />
     </div>
-    <RouterLink to="/specialists" v-else class="ml-auto">
+    <RouterLink to="specialists" v-else class="ml-auto">
       <IconPen class="text-neutral-500" />
     </RouterLink>
   </div>

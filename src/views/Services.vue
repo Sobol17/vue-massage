@@ -6,9 +6,21 @@ import {useServiceStore} from "@/stores/services.js";
 import AppInput from "@/components/UI/AppInput.vue";
 import FixedBasket from "@/components/FixedBasket.vue";
 import {useCartStore} from "@/stores/cart.js";
+import {onMounted} from "vue";
+import {useOfficeStore} from "@/stores/office.js";
 
 const serviceStore = useServiceStore()
 const cartStore = useCartStore()
+const officeStore = useOfficeStore()
+
+onMounted(() => {
+  serviceStore.getServices({
+    specialistId: cartStore.chosenSpecialist.id,
+    time: cartStore.chosenTime,
+    date: cartStore.chosenDate,
+    branchId: officeStore.activeOffice.id
+  })
+})
 </script>
 
 <template>
@@ -52,7 +64,7 @@ const cartStore = useCartStore()
 
     <FixedBasket
       btnText="Выбрать специалиста"
-      btnLink="/specialists"
+      btnLink="specialists"
       v-if="cartStore.serviceInBasketCount > 0"
     />
 

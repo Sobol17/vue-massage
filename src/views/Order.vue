@@ -13,9 +13,11 @@ import getFullNamedDate from "../utils/getFullNamedDate.js";
 import SpecialistCard from "@/components/SpecialistCard.vue";
 import IconCalendar from "@/components/icons/IconCalendar.vue";
 import {useRouter} from "vue-router";
+import {useOfficeStore} from "@/stores/office.js";
 
 const cartStore = useCartStore()
 const orderStore = useOrderStore()
+const officeStore = useOfficeStore()
 
 const router = useRouter()
 
@@ -35,7 +37,12 @@ const sendForm = () => {
     }
 
     orderStore.sendOrderForm(requestData)
-    router.push('/thanks')
+
+    localStorage.setItem("name", requestData.name)
+    localStorage.setItem("phone", requestData.phone)
+    localStorage.setItem("email", requestData.email)
+
+    router.push('thanks')
   } else {
     console.log('validation error')
   }
@@ -69,7 +76,7 @@ const sendForm = () => {
             <p class="text-body-m-regular">{{ cartStore.chosenDate.time }}</p>
           </div>
 
-          <RouterLink to="/dates" class="ml-auto">
+          <RouterLink to="dates" class="ml-auto">
             <IconPen class="text-neutral-500"/>
           </RouterLink>
         </div>
@@ -106,8 +113,7 @@ const sendForm = () => {
 
       <div class="flex items-start gap-x-2 rounded-[20px] p-4 bg-white mt-3">
         <IconBell class="text-neutral-500"/>
-        <p class="text-[12px] text-neutral-500">Советуем прийти в студию за 10-15 минут В случае отмены,
-          предупредите, пожалуйста, администратора +7(995)690-05-90</p>
+        <p class="text-[12px] text-neutral-500">{{officeStore.activeOffice.text}}</p>
       </div>
 
       <div class="bg-white mt-3 rounded-[20px] p-4">
@@ -136,7 +142,7 @@ const sendForm = () => {
 
     <div v-else class="py-10 px-4 text-center bg-white">
       <h1 class="text-headline">Ваша корзина услуг пуста</h1>
-      <AppButton text="Выбрать услуги" class="w-full mt-4" @click="router.push('/services')"/>
+      <AppButton text="Выбрать услуги" class="w-full mt-4" @click="router.push('services')"/>
     </div>
   </main>
 </template>

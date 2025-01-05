@@ -8,12 +8,17 @@ import FixedBasket from "@/components/FixedBasket.vue";
 import {useCartStore} from "@/stores/cart.js";
 import AppButton from "@/components/UI/AppButton.vue";
 import {useRouter} from "vue-router";
+import {onMounted} from "vue";
 
 
 const specialistsStore = useSpecialistsStore()
 const cartStore = useCartStore()
 
 const router = useRouter()
+
+onMounted(() => {
+  specialistsStore.getSpecialists()
+})
 </script>
 
 <template>
@@ -29,8 +34,10 @@ const router = useRouter()
       </div>
       <p class="text-body-m-regular flex-grow">Любой специалист</p>
       <AppRadio
-        :value="0"
-        v-model="cartStore.chosenSpecialistId"
+        value="any"
+        name="spec"
+        v-model="cartStore.chosenSpecialist"
+        @update:modelValue="cartStore.chosenDate = null"
       />
     </div>
 
@@ -50,12 +57,12 @@ const router = useRouter()
   </div>
 
   <FixedBasket
-    btnLink="/dates"
-    v-if="cartStore.serviceInBasketCount > 0 && cartStore.chosenSpecialistId"
+    btnLink="dates"
+    v-if="cartStore.serviceInBasketCount > 0 && cartStore.chosenSpecialist.id !== null"
   />
 
-  <div v-if="cartStore.chosenSpecialistId !== null && cartStore.serviceInBasketCount === 0" class="mt-4 absolute bottom-6 left-4 right-4">
-    <AppButton text="Выбрать услугу" @click="router.push('/services')" class="w-full"/>
+  <div v-if="cartStore.chosenSpecialist.id !== null && cartStore.serviceInBasketCount === 0" class="mt-4 absolute bottom-6 left-4 right-4">
+    <AppButton text="Выбрать услугу" @click="router.push('services')" class="w-full"/>
   </div>
 
 

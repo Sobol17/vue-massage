@@ -15,7 +15,7 @@
         >
           <IconArrowLeft md />
         </button>
-        <button class="p-4" @click="nextMonth" type="button">
+        <button class="p-4" @click="nextMonth" type="button" :disabled="isNextMonthDisabled">
           <IconArrowRight md />
         </button>
       </div>
@@ -25,20 +25,20 @@
         </span>
       </div>
       <div class="days">
-				<span
+        <span
           v-for="day in daysInMonth"
           :key="day.date"
           :class="{
-						'is-today': isToday(day.date),
-						'is-selected': isSelected(day.date),
-						'is-weekend': isWeekend(day.date),
-						'is-other-month': day.isOtherMonth,
-						'is-disabled': isDisabled(day.date),
-					}"
+            'is-today': isToday(day.date),
+            'is-selected': isSelected(day.date),
+            'is-weekend': isWeekend(day.date),
+            'is-other-month': day.isOtherMonth,
+            'is-disabled': isDisabled(day.date),
+          }"
           @click="!isDisabled(day.date) && selectDate(day.date)"
         >
-					{{ day.day }}
-				</span>
+          {{ day.day }}
+        </span>
       </div>
     </div>
   </div>
@@ -62,6 +62,10 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false,
+  },
+  availableDays: {
+    type: Array,
+    default: () => [],
   },
 });
 
@@ -154,26 +158,33 @@ const isWeekend = date => {
 };
 
 const isDisabled = date => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0); // Убираем время для корректного сравнения
-  return date < today;
+  const formattedDate = formatDate(date);
+  return !props.availableDays.includes(formattedDate);
 };
 
 const formatDate = date => {
   const day = String(date.getDate()).padStart(2, '0');
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const year = String(date.getFullYear());
-  return `${day}.${month}.${year}`;
+  return `${year}-${month}-${day}`;
 };
 
 const selectDate = date => {
-  selectedDate.value = date;
-  emit('update:modelValue', formatDate(date));
+  if (!isDisabled(date)) {
+    selectedDate.value = date;
+    emit('update:modelValue', formatDate(date));
+  }
 };
 
 const isCurrentMonth = computed(() => {
   const today = new Date();
   return currentMonth.value === today.getMonth() && currentYear.value === today.getFullYear();
+});
+
+const isNextMonthDisabled = computed(() => {
+  const today = new Date();
+  const maxDate = new Date(today.getFullYear(), today.getMonth() + 2, 0);
+  return currentMonth.value === maxDate.getMonth() && currentYear.value === maxDate.getFullYear();
 });
 
 const prevMonth = () => {
@@ -186,6 +197,12 @@ const prevMonth = () => {
 };
 
 const nextMonth = () => {
+  const today = new Date();
+  const maxDate = new Date(today.getFullYear(), today.getMonth() + 2, 0);
+  if (currentMonth.value === maxDate.getMonth() && currentYear.value === maxDate.getFullYear()) {
+    return;
+  }
+
   if (currentMonth.value === 11) {
     currentMonth.value = 0;
     currentYear.value++;
