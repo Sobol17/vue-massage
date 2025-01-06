@@ -1,5 +1,5 @@
 export default function getFullNamedDate(inputDate) {
-  const [day, month, year] = inputDate.split('.').map(Number);
+  const [year, month, day] = inputDate.split('-').map(Number);
 
   const date = new Date(year, month - 1, day);
 

@@ -1,7 +1,5 @@
 import {ref, computed, reactive} from 'vue'
 import { defineStore } from 'pinia'
-import getFullNamedDate from "@/utils/getFullNamedDate.js";
-import axios from "axios";
 import axiosInst from "@/axios.instance.js";
 
 export const useSuccessOrderStore = defineStore('success', () => {

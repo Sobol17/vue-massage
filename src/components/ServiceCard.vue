@@ -33,19 +33,9 @@ const opened = ref(false);
     :src="img"
     alt=""
   >
-  <div class="flex items-start gap-x-3">
+  <div class="flex items-start justify-between gap-x-3">
     <div>
       <div class="text-body-m-regular mb-1">{{title}}</div>
-      <div class="flex items-start gap-x-2 text-body-s-regular text-neutral-500 mb-2 pr-6">
-        <div
-          :class="[ 'text-ellipsis overflow-hidden', opened ? 'line-clamp-100' : 'line-clamp-1']"
-        >{{formatTime(time)}} · {{description}}</div>
-        <span
-          v-if="!opened"
-          @click="opened = !opened"
-          class="cursor-pointer whitespace-nowrap text-body-s-medium"
-        >ещё</span>
-      </div>
     </div>
     <AppCheckbox
       v-model="selected"

@@ -1,6 +1,5 @@
 <script setup>
 import ReviewStars from "@/components/ReviewStars.vue";
-import getFullNamedDate from "../utils/getFullNamedDate.js";
 
 const props = defineProps({
   author: String,

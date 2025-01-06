@@ -20,7 +20,7 @@ export const useOfficeStore = defineStore('office', () => {
   const getOffices = async () => {
     const response = await axiosInst.get('/offices.json')
     offices.value = response.data
-    initialOffice.value = response.data[0]
+    if (initialOffice.value === null) initialOffice.value = response.data[0]
   }
 
   return { activeOffice, changeOffice, getOffices, offices}

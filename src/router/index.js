@@ -11,6 +11,9 @@ import {useOfficeStore} from "@/stores/office.js";
 
 const router = createRouter({
   history: createWebHistory(process.env.NODE_ENV === 'production' ? '/vue-massage/' : '/'),
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 };
+  },
   routes: [
     {
       path: '/:address',
@@ -61,11 +64,18 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
+  const officeStore = useOfficeStore()
+  await officeStore.getOffices();
+
   if (!to.params.address) {
-    const officeStore = useOfficeStore()
-    await officeStore.getOffices();
     next(`/${officeStore.activeOffice.code}/`);
   } else {
+    officeStore.offices.forEach(office => {
+      if (office.code === to.params.address) {
+        officeStore.changeOffice(office)
+      }
+    })
+
     next();
   }
 });

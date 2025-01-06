@@ -27,8 +27,8 @@ onMounted(() => {
 </script>
 
 <template>
-<main>
-  <div class="bg-white p-4 h-[100vh] relative sm:h-full">
+<main class="bg-white min-h-[100vh] h-100%">
+  <div class="p-4 h-[100vh] relative sm:h-full">
     <Breadcrumb />
     <DatePicker
       :available-days="datesStore.availableDates"
@@ -52,7 +52,20 @@ onMounted(() => {
 
     <div class="absolute sm:fixed bottom-6 left-0 right-0 px-4">
       <AppButton
-        v-if="cartStore.chosenTime"
+        v-if="cartStore.chosenTime && cartStore.chosenSpecialist.id !== null"
+        class="w-full"
+        text="Выбрать услугу"
+        @click="router.push({
+          name: 'services',
+          query: {
+            date: cartStore.chosenDate,
+            time: cartStore.chosenTime
+          }
+        })"
+      />
+
+      <AppButton
+        v-if="cartStore.chosenTime && cartStore.chosenSpecialist.id === null"
         class="w-full"
         :text="cartStore.cartButtonInfo.title"
         @click="router.push({

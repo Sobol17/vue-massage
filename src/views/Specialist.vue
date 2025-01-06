@@ -71,8 +71,8 @@ onMounted(() => {
           name: 'services',
           query: {
             specialist: cartStore.chosenSpecialist.id,
-            date: cartStore.chosenDate?.date,
-            time: cartStore.chosenDate?.time
+            date: cartStore.chosenDate,
+            time: cartStore.chosenTime
           }
         }
       )"
@@ -87,7 +87,7 @@ onMounted(() => {
         {
           name: 'dates',
           query: {
-            specialist: cartStore.chosenSpecialist.id,
+            specialist: cartStore.chosenSpecialist.id
           }
         }
       )"

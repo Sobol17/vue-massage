@@ -24,16 +24,20 @@ const router = useRouter()
 <main class="rounded-t-[24px] bg-white p-4 mt-[60px] h-[100vh] sm:mx-2">
   <div class="relative">
     <Avatar
-      class="absolute left-0 top-[-56px] size-[80px]"
+      class="absolute left-1/2 translate-x-[-50%] top-[-56px] size-[128px]"
       image="https://placehold.jp/3d4070/ffffff/150x150.png"
     />
-    <div class="flex items-center gap-x-2 pt-10">
-      <h1 class="text-headline">{{ officeStore.activeOffice?.title }}</h1>
-      <button @click="showOfficeModal = true">
-        <IconArrowDown bg />
-      </button>
+    <div class="text-center gap-x-2 pt-20">
+      <div class="relative inline-block">
+        <h1 class="text-headline">{{ officeStore.activeOffice?.title }}</h1>
+        <button
+          class="absolute right-[-32px] top-1/2 translate-y-[-50%]"
+          @click="showOfficeModal = true">
+          <IconArrowDown bg />
+        </button>
+      </div>
     </div>
-    <h3 class="text-body-m-regular text-neutral-500 pt-2">{{ officeStore.activeOffice?.address }}</h3>
+    <h3 class="text-body-m-regular text-neutral-500 pt-2 text-center">{{ officeStore.activeOffice?.address }}</h3>
   </div>
 
   <div class="flex flex-col gap-y-4 mt-6">

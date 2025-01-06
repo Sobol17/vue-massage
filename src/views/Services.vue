@@ -19,8 +19,8 @@ const route = useRoute();
 onMounted(() => {
   serviceStore.getServices({
     specialistId: route.query.specialist,
-    time: cartStore.chosenDate?.time,
-    date: route.query.date,
+    time: cartStore.chosenTime,
+    date: cartStore.chosenDate,
     branchId: officeStore.activeOffice?.id
   })
 })
@@ -32,7 +32,7 @@ onMounted(() => {
       <Breadcrumb class="sticky top-0 bg-white pt-4 z-[10]"/>
       <h1 class="text-headline pt-6">Выбрать услугу</h1>
       <div class="scrollbar sticky top-[64px] bg-white z-[10] pt-3">
-        <div class="flex gap-x-2 max-w-full min-w-max">
+        <div class="flex gap-x-2 max-w-full min-w-max pb-2">
           <CategoryChip
             v-for="item in serviceStore.categories"
             :title="item"
@@ -50,7 +50,7 @@ onMounted(() => {
 
       <section :id="service.category" v-for="service in serviceStore.filteredServices">
         <h3 class="text-headline py-6">{{ service.category }}</h3>
-        <div class="flex flex-col gap-y-6">
+        <div class="flex flex-col gap-y-6 mb-[120px]">
           <ServiceCard
             v-for="item in service.items"
             :id="item?.id"

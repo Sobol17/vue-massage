@@ -32,11 +32,11 @@ const sendForm = () => {
       email: orderStore.orderForm.email,
       comment: orderStore.orderForm.comment,
       remind: orderStore.orderForm.remind,
-      onlinePayment: orderStore.orderForm.onlinePayment,
+      // onlinePayment: orderStore.orderForm.onlinePayment,
       specialistId: cartStore.chosenSpecialist.id,
       services: cartStore.chosenServices,
-      date: cartStore.chosenDate.date,
-      time: cartStore.chosenDate.time
+      date: cartStore.chosenDate,
+      time: cartStore.chosenTime
     }
 
     orderStore.sendOrderForm(requestData)
@@ -78,7 +78,7 @@ const showModal = ref(false)
 
           <div>
             <p class="text-body-s-regular text-neutral-500">{{ getFullNamedDate(cartStore.chosenDate) }}</p>
-            <p class="text-body-m-regular">{{ cartStore.chosenDate.time }}</p>
+            <p class="text-body-m-regular">{{ cartStore.chosenTime }}</p>
           </div>
 
           <RouterLink to="dates" class="ml-auto">
@@ -122,14 +122,14 @@ const showModal = ref(false)
       </div>
 
       <div class="bg-white mt-3 rounded-[20px] p-4">
-        <div class="flex items-center justify-between">
-          <p class="text-body-m-regular">Оплатить онлайн</p>
-          <AppSwitch
-            v-model="orderStore.orderForm.onlinePayment"
-          />
-        </div>
+<!--        <div class="flex items-center justify-between">-->
+<!--          <p class="text-body-m-regular">Оплатить онлайн</p>-->
+<!--          <AppSwitch-->
+<!--            v-model="orderStore.orderForm.onlinePayment"-->
+<!--          />-->
+<!--        </div>-->
 
-        <hr class="mx-[-16px] my-4 text-neutral-300">
+<!--        <hr class="mx-[-16px] my-4 text-neutral-300">-->
 
         <div class="flex items-center justify-between">
           <p class="text-body-s-regular">Итого</p>
