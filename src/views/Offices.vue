@@ -3,38 +3,15 @@ import IconArrowLeft from "@/components/icons/IconArrowLeft.vue";
 import IconLocation from "@/components/icons/IconLocation.vue";
 import IconPen from "@/components/icons/IconPen.vue";
 import OfficeCard from "@/components/OfficeCard.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import Loader from "@/components/UI/Loader.vue";
+import {useOfficeStore} from "@/stores/office.js";
 
-const offices = ref([
-  {
-    id: 1,
-    title: "Массаж 1",
-    address: "ул. Пушкина, 15",
-    code: "pushkina-15",
-    text: "Советуем прийти в студию за 10-15 минут В случае отмены,\n" +
-      "          предупредите, пожалуйста, администратора +7(995)690-05-90",
-    img: "https://placehold.jp/3d4070/ffffff/600x300.png"
-  },
-  {
-    id: 2,
-    title: "Массаж 2",
-    address: "ул. Пушкина, 4124",
-    code: "pushkina-4124",
-    text: "Советуем прийти в студию за 10-15 минут В случае отмены,\n" +
-      "          предупредите, пожалуйста, администратора +7(995)690-05-90",
-    img: "https://placehold.jp/3d4070/ffffff/600x300.png"
-  },
-  {
-    id: 3,
-    title: "Массаж 3",
-    address: "ул. Постышева, 5",
-    code: "postisheva-5",
-    text: "Советуем прийти в студию за 10-15 минут В случае отмены,\n" +
-      "          предупредите, пожалуйста, администратора +7(995)690-05-90",
-    img: "https://placehold.jp/3d4070/ffffff/600x300.png"
-  },
-])
+const officeStore = useOfficeStore()
+
+onMounted(() => {
+  officeStore.getOffices();
+})
 </script>
 
 <template>
@@ -56,7 +33,7 @@ const offices = ref([
 
   <div class="flex flex-col gap-y-3 mt-6">
     <OfficeCard
-      v-for="office in offices"
+      v-for="office in officeStore.offices"
       :office="office"
     />
   </div>

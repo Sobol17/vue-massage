@@ -1,19 +1,23 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import axios from "axios";
 
 export const useOfficeStore = defineStore('office', () => {
-  const activeOffice = ref({
-    id: 1,
-    title: 'Массажный салон №1',
-    code: 'pushkina-25',
-    text: 'Советуем прийти в студию за 10-15 минут В случае отмены,\n' +
-      '          предупредите, пожалуйста, администратора +7(995)690-05-90',
-    address: 'ул. Пушкина, 25',
-  });
+
+  const offices = ref([]);
+
+  const activeOffice = computed(() => {
+    return offices.value[0]
+  })
 
   const changeOffice = (office) => {
     activeOffice.value = office
   }
 
-  return { activeOffice, changeOffice }
+  const getOffices = async () => {
+    const response = await axios.get('/offices.json')
+    offices.value = response.data
+  }
+
+  return { activeOffice, changeOffice, getOffices, offices }
 })

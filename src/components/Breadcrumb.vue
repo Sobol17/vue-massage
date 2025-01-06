@@ -17,8 +17,8 @@ const officeStore = useOfficeStore()
         class="size-[48px]"
       />
       <RouterLink to="/" class="block">
-        <div class="text-body-m-regular uppercase">{{officeStore.activeOffice.title}}</div>
-        <div class="text-body-m-regular text-neutral-500">{{officeStore.activeOffice.address}}</div>
+        <div class="text-body-m-regular uppercase">{{officeStore.activeOffice?.title}}</div>
+        <div class="text-body-m-regular text-neutral-500">{{officeStore.activeOffice?.address}}</div>
       </RouterLink>
     </div>
   </RouterLink>

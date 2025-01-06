@@ -8,17 +8,20 @@ import FixedBasket from "@/components/FixedBasket.vue";
 import {useCartStore} from "@/stores/cart.js";
 import {onMounted} from "vue";
 import {useOfficeStore} from "@/stores/office.js";
+import {useRoute} from "vue-router";
 
 const serviceStore = useServiceStore()
 const cartStore = useCartStore()
 const officeStore = useOfficeStore()
 
+const route = useRoute();
+
 onMounted(() => {
   serviceStore.getServices({
-    specialistId: cartStore.chosenSpecialist.id,
-    time: cartStore.chosenTime,
-    date: cartStore.chosenDate,
-    branchId: officeStore.activeOffice.id
+    specialistId: route.query.specialist,
+    time: cartStore.chosenDate?.time,
+    date: route.query.date,
+    branchId: officeStore.activeOffice?.id
   })
 })
 </script>
@@ -50,12 +53,12 @@ onMounted(() => {
         <div class="flex flex-col gap-y-6">
           <ServiceCard
             v-for="item in service.items"
-            :id="item.id"
-            :img="item.img"
-            :title="item.title"
-            :description="item.description"
-            :time="item.time"
-            :price="item.price"
+            :id="item?.id"
+            :img="item?.img"
+            :title="item?.title"
+            :description="item?.description"
+            :time="item?.time"
+            :price="item?.price"
           />
         </div>
       </section>
@@ -63,8 +66,6 @@ onMounted(() => {
     </div>
 
     <FixedBasket
-      btnText="Выбрать специалиста"
-      btnLink="specialists"
       v-if="cartStore.serviceInBasketCount > 0"
     />
 

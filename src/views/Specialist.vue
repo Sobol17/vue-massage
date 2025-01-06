@@ -17,7 +17,10 @@ const cartStore = useCartStore()
 const router = useRouter()
 
 onMounted(() => {
-  specialistsStore.getSpecialists()
+  specialistsStore.getSpecialists({
+    date: cartStore.chosenDate,
+    time: cartStore.chosenTime
+  })
 })
 </script>
 
@@ -57,12 +60,39 @@ onMounted(() => {
   </div>
 
   <FixedBasket
-    btnLink="dates"
     v-if="cartStore.serviceInBasketCount > 0 && cartStore.chosenSpecialist.id !== null"
   />
 
-  <div v-if="cartStore.chosenSpecialist.id !== null && cartStore.serviceInBasketCount === 0" class="mt-4 absolute bottom-6 left-4 right-4">
-    <AppButton text="Выбрать услугу" @click="router.push('services')" class="w-full"/>
+  <div v-if="cartStore.chosenSpecialist.id !== null && cartStore.serviceInBasketCount === 0 && cartStore.chosenDate !== null" class="mt-4 absolute bottom-6 left-4 right-4">
+    <AppButton
+      text="Выбрать услугу"
+      @click="router.push(
+        {
+          name: 'services',
+          query: {
+            specialist: cartStore.chosenSpecialist.id,
+            date: cartStore.chosenDate?.date,
+            time: cartStore.chosenDate?.time
+          }
+        }
+      )"
+      class="w-full"
+    />
+  </div>
+
+  <div v-if="cartStore.chosenSpecialist.id !== null && cartStore.serviceInBasketCount === 0 && cartStore.chosenDate === null" class="mt-4 absolute bottom-6 left-4 right-4">
+    <AppButton
+      text="Выбрать дату и время"
+      @click="router.push(
+        {
+          name: 'dates',
+          query: {
+            specialist: cartStore.chosenSpecialist.id,
+          }
+        }
+      )"
+      class="w-full"
+    />
   </div>
 
 

@@ -11,10 +11,6 @@ import IconCross from "@/components/icons/IconCross.vue";
 import {useRouter} from "vue-router";
 import {useCartStore} from "@/stores/cart.js";
 
-const props = defineProps({
-  btnLink: String
-})
-
 const router = useRouter()
 const serviceStore = useServiceStore()
 const cartStore = useCartStore()

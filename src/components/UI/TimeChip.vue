@@ -18,7 +18,7 @@ const selectTime = () => {
 <template>
   <div
     :class="[
-      'rounded-full flex-grow p-3 text-center cursor-pointer transition-all',
+      'rounded-full basis-1/3 p-3 text-center cursor-pointer transition-all',
       isActive ? 'bg-green-dark text-white' : 'bg-neutral-200 hover:bg-neutral-300'
     ]"
     @click="selectTime"

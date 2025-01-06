@@ -24,17 +24,17 @@ const props = defineProps({
 const cartStore = useCartStore()
 
 const selectDate = (time) => {
-  cartStore.chosenDate = {
-    specialistId: props.id,
-    date: props.dates[0].date,
-    time: time
-  }
+  cartStore.chosenSpecialist.id = props.id
+
+  cartStore.chosenDate = props.dates[0].date
+
+  cartStore.chosenTime = time
 
   cartStore.chosenSpecialist = props
 }
 
 const activeDate = (time) => {
-  return cartStore.chosenDate?.specialistId === props.id && cartStore.chosenDate?.time === time
+  return cartStore.chosenSpecialist.id === props.id && cartStore.chosenTime === time
 }
 
 </script>

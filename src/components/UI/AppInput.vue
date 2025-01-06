@@ -1,15 +1,10 @@
 <script setup>
 import IconSearch from "@/components/icons/IconSearch.vue";
 
-const emits = defineEmits(['update:modelValue', 'button-click']);
 const props = defineProps({
   buttonText: String,
   label: String,
   placeholder: String,
-  modelValue: {
-    type: [String, Number, Boolean],
-    default: '',
-  },
   type: {
     type: String,
     default: 'text',
@@ -22,6 +17,8 @@ const props = defineProps({
   disabled: Boolean,
   search: Boolean,
 });
+
+const model = defineModel();
 </script>
 
 <template>
@@ -34,9 +31,8 @@ const props = defineProps({
         :type="type"
         placeholder=" "
         :name="name"
-        v-model="value"
+        v-model="model"
         :disabled="disabled"
-        @input="$emit('update:modelValue', value)"
       />
       <label class="input__label" :class="{ 'label--error': error }">{{ placeholder }}</label>
     </div>

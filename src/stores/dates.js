@@ -7,9 +7,17 @@ export const useDateStore = defineStore('dates', () => {
 
   const dates = ref([])
 
-  const getAvailableDates = async () => {
-    const res = await axios.get('/dates.json')
-    dates.value = res.data
+  const getAvailableDates = async ({specialistId = null}) => {
+    let url = '/dates.json';
+    const params = new URLSearchParams();
+
+    if (specialistId) {
+      params.append('specialistId', specialistId);
+    }
+
+    url += `?${params.toString()}`
+    const response = await axios.get(url)
+    dates.value = response.data
   }
 
   const availableDates = computed(() => {

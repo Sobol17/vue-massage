@@ -1,11 +1,12 @@
 import {ref, computed, reactive} from 'vue'
 import { defineStore } from 'pinia'
+import axios from "axios";
 
 export const useOrderStore = defineStore('order', () => {
   const orderForm = reactive({
-    name: '',
-    phone: '',
-    email: '',
+    name: localStorage.getItem('name') || '',
+    phone: localStorage.getItem('phone') || '',
+    email: localStorage.getItem('email') || '',
     comment: '',
     remind: '0',
     onlinePayment: false
@@ -47,8 +48,8 @@ export const useOrderStore = defineStore('order', () => {
     return isValid;
   }
 
-  const sendOrderForm = (request) => {
-    console.log(request)
+  const sendOrderForm = async (request) => {
+    await axios.post('/order', request)
   }
 
   return {

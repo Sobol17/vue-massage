@@ -1,11 +1,11 @@
 <script setup>
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import DatePicker from "@/components/DatePicker.vue";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import TimeAccordion from "@/components/TimeAccordion.vue";
 import TimeChip from "@/components/UI/TimeChip.vue";
 import AppButton from "@/components/UI/AppButton.vue";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {useCartStore} from "@/stores/cart.js";
 import {useDateStore} from "@/stores/dates.js";
 
@@ -13,22 +13,30 @@ const cartStore = useCartStore()
 const datesStore = useDateStore()
 const router = useRouter()
 
+const activeTimeSlots = computed(() => {
+  return datesStore.dates.find(item => item.date === cartStore.chosenDate)?.day_time
+})
+
+const route = useRoute();
+
 onMounted(() => {
-  datesStore.getAvailableDates()
+  datesStore.getAvailableDates({
+    specialistId: route.query.specialist,
+  })
 })
 </script>
 
 <template>
 <main>
-  <div class="bg-white p-4 h-[100vh] relative">
+  <div class="bg-white p-4 h-[100vh] relative sm:h-full">
     <Breadcrumb />
     <DatePicker
       :available-days="datesStore.availableDates"
       v-model="cartStore.chosenDate"
     />
-    <div class="mt-6">
+    <div class="mt-6 sm:pb-16">
       <TimeAccordion
-        v-for="time in datesStore.dates[0]?.day_time"
+        v-for="time in activeTimeSlots"
         class="py-3"
         :title="time.title">
         <div class="flex gap-2 mt-3">
@@ -41,14 +49,22 @@ onMounted(() => {
       </TimeAccordion>
 
     </div>
-    <div class="absolute bottom-6 left-0 right-0 px-4">
+
+    <div class="absolute sm:fixed bottom-6 left-0 right-0 px-4">
       <AppButton
-        v-if="cartStore.chosenDate"
+        v-if="cartStore.chosenTime"
         class="w-full"
         :text="cartStore.cartButtonInfo.title"
-        @click="router.push('specialists')"
+        @click="router.push({
+          name: 'specialists',
+          query: {
+            date: cartStore.chosenDate,
+            time: cartStore.chosenTime
+          }
+        })"
       />
     </div>
+
   </div>
 </main>
 </template>

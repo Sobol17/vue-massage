@@ -44,10 +44,15 @@ export const useCartStore = defineStore('cart', () => {
         title: 'Готово',
         link: 'order'
       }
-    } else if (serviceInBasketCount.value > 0 && chosenSpecialist.value !== null && chosenDate.value === null) {
+    } else if (serviceInBasketCount.value > 0 && chosenSpecialist.value.id !== null && chosenDate.value === null) {
       return {
         title: 'Выбрать дату и время',
-        link: 'dates'
+        link: {
+          name: 'dates',
+          query: {
+            specialist: chosenSpecialist.value.id
+          }
+        }
       }
     } else {
       return {

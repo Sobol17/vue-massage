@@ -28,12 +28,12 @@ const router = useRouter()
       image="https://placehold.jp/3d4070/ffffff/150x150.png"
     />
     <div class="flex items-center gap-x-2 pt-10">
-      <h1 class="text-headline">{{ officeStore.activeOffice.title }}</h1>
+      <h1 class="text-headline">{{ officeStore.activeOffice?.title }}</h1>
       <button @click="showOfficeModal = true">
         <IconArrowDown bg />
       </button>
     </div>
-    <h3 class="text-body-m-regular text-neutral-500 pt-2">{{ officeStore.activeOffice.address }}</h3>
+    <h3 class="text-body-m-regular text-neutral-500 pt-2">{{ officeStore.activeOffice?.address }}</h3>
   </div>
 
   <div class="flex flex-col gap-y-4 mt-6">
@@ -70,8 +70,8 @@ const router = useRouter()
   <Transition name="fade">
     <OfficeModal v-if="showOfficeModal" @close="showOfficeModal = false">
       <div class="mt-6 text-center">
-        <h2 class="text-headline">{{ officeStore.activeOffice.title }}</h2>
-        <h3 class="text-body-m-regular text-neutral-500 pt-2">{{ officeStore.activeOffice.address }}</h3>
+        <h2 class="text-headline">{{ officeStore.activeOffice?.title }}</h2>
+        <h3 class="text-body-m-regular text-neutral-500 pt-2">{{ officeStore.activeOffice?.address }}</h3>
         <AppButton text="О филиале" class="mt-8 w-full" @click="$emit('close')" />
         <AppButton text="Все филиалы" class="mt-3 w-full" @click="router.push({name: 'offices'})" />
       </div>

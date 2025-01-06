@@ -14,6 +14,9 @@ import SpecialistCard from "@/components/SpecialistCard.vue";
 import IconCalendar from "@/components/icons/IconCalendar.vue";
 import {useRouter} from "vue-router";
 import {useOfficeStore} from "@/stores/office.js";
+import IconCross from "@/components/icons/IconCross.vue";
+import AppModal from "@/components/modals/AppModal.vue";
+import {ref} from "vue";
 
 const cartStore = useCartStore()
 const orderStore = useOrderStore()
@@ -47,6 +50,8 @@ const sendForm = () => {
     console.log('validation error')
   }
 }
+
+const showModal = ref(false)
 </script>
 
 <template>
@@ -72,7 +77,7 @@ const sendForm = () => {
           </div>
 
           <div>
-            <p class="text-body-s-regular text-neutral-500">{{ getFullNamedDate(cartStore.chosenDate.date) }}</p>
+            <p class="text-body-s-regular text-neutral-500">{{ getFullNamedDate(cartStore.chosenDate) }}</p>
             <p class="text-body-m-regular">{{ cartStore.chosenDate.time }}</p>
           </div>
 
@@ -86,7 +91,7 @@ const sendForm = () => {
         <div class="flex gap-x-1 items-baseline">
           <div class="text-body-l-bold">Услуги</div>
           <div class="text-neutral-500 text-body-m-regular">{{ formatTime(cartStore.cartTotalTime) }}</div>
-          <IconPen class="text-neutral-500 ml-auto"/>
+          <IconPen class="text-neutral-500 ml-auto" @click="showModal = true"/>
         </div>
 
         <div class="flex flex-col gap-y-3 mt-3">
@@ -145,6 +150,36 @@ const sendForm = () => {
       <AppButton text="Выбрать услуги" class="w-full mt-4" @click="router.push('services')"/>
     </div>
   </main>
+
+  <teleport to="body">
+    <AppModal
+      v-if="showModal"
+      title=""
+      @close="showModal = false"
+    >
+      <div class="flex mt-6">
+        <div class="flex-grow flex gap-x-2 items-baseline">
+          <span class="text-body-m-regular">{{ cartStore.serviceInBasketCount }} {{ transformWord }}</span>
+          <span class="text-body-s-regular text-neutral-500">{{formatTime(cartStore.cartTotalTime)}}</span>
+        </div>
+        <div class="text-body-l-bold">{{ formatPrice(cartStore.cartTotalPrice) }}</div>
+      </div>
+
+      <div class="flex flex-col gap-y-3 mt-3">
+        <div
+          class="flex gap-x-3 items-start"
+          v-for="service in cartStore.chosenServices"
+        >
+          <div>
+            <p>{{service.title}}</p>
+            <p class="text-body-s-regular text-neutral-500">{{formatTime(service.time)}}</p>
+          </div>
+          <div class="text-body-m-medium ml-auto">{{formatPrice(service.price)}}</div>
+          <IconCross @click="cartStore.removeServiceFromCart(service)" class="size-4 cursor-pointer text-neutral-500" />
+        </div>
+      </div>
+    </AppModal>
+  </teleport>
 </template>
 
 <style scoped>

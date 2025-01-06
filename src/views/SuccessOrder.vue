@@ -16,7 +16,7 @@ import {useSuccessOrderStore} from "@/stores/successOrder.js";
 import formatTime from "../utils/formatTime.js";
 import formatPrice from "../utils/formatPrice.js";
 import CopyChip from "@/components/UI/CopyChip.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 
 const successOrderStore = useSuccessOrderStore()
 
@@ -32,6 +32,10 @@ const copyLink = async () => {
     console.log(e);
   }
 };
+
+onMounted(() => {
+  successOrderStore.getSuccessOrder();
+})
 </script>
 
 <template>
@@ -51,11 +55,11 @@ const copyLink = async () => {
 
       <SpecialistCard
         class="mt-6"
-        :id="successOrderStore.successOrder.specialist.id"
-        :name="successOrderStore.successOrder.specialist.name"
-        :prof="successOrderStore.successOrder.specialist.prof"
-        :img="successOrderStore.successOrder.specialist.img"
-        :reviews="successOrderStore.successOrder.specialist.reviews"
+        :id="successOrderStore.successOrder.specialist?.id"
+        :name="successOrderStore.successOrder.specialist?.name"
+        :prof="successOrderStore.successOrder.specialist?.prof"
+        :img="successOrderStore.successOrder.specialist?.img"
+        :reviews="successOrderStore.successOrder.specialist?.reviews"
         :dates="['12:00']"
         :inSuccess="true"
       />
@@ -115,28 +119,28 @@ const copyLink = async () => {
       <div class="text-body-m-medium">{{formatPrice(successOrderStore.successOrder.totalPrice)}}</div>
     </div>
 
-    <div class="flex items-center gap-x-3 mt-4">
+<!--    <div class="flex items-center gap-x-3 mt-4">-->
 
-      <div class="flex items-center self-start justify-center rounded-full size-[48px] bg-neutral-200">
-        <IconCalendar/>
-      </div>
+<!--      <div class="flex items-center self-start justify-center rounded-full size-[48px] bg-neutral-200">-->
+<!--        <IconCalendar/>-->
+<!--      </div>-->
 
-      <div class="flex flex-col items-start">
-        <p class="text-body-s-regular text-neutral-500 mb-2">Вам доступен (1) новый подарок за оформление записи</p>
-        <AppButton sm text="Выбрать" />
-      </div>
-    </div>
+<!--      <div class="flex flex-col items-start">-->
+<!--        <p class="text-body-s-regular text-neutral-500 mb-2">Вам доступен (1) новый подарок за оформление записи</p>-->
+<!--        <AppButton sm text="Выбрать" />-->
+<!--      </div>-->
+<!--    </div>-->
 
     <h3 class="text-body-l-medium mt-6">Контакты</h3>
 
     <div class="flex items-center gap-x-2 mt-4">
-      <img class="size-[48px] rounded-[12px]" :src="successOrderStore.successOrder.currentOffice.img" alt="">
-      <p class="text-body-m-regular uppercase">{{ successOrderStore.successOrder.currentOffice.name }}</p>
+      <img class="size-[48px] rounded-[12px]" :src="successOrderStore.successOrder.office?.img" alt="">
+      <p class="text-body-m-regular uppercase">{{ successOrderStore.successOrder.office?.name }}</p>
     </div>
 
     <div class="mt-4 flex items-center gap-x-3">
       <IconLocation />
-      <p>{{ successOrderStore.successOrder.currentOffice.address }}</p>
+      <p>{{ successOrderStore.successOrder.office?.address }}</p>
       <IconCopy @click="copyLink" class="text-neutral-500 cursor-pointer size-4 ml-auto"/>
     </div>
 

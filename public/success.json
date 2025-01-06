@@ -1,0 +1,33 @@
+{
+  "date": "Воскресенье, 5 января 2025",
+  "time": "09:00 - 12:00",
+  "specialist" : {
+    "id": 1,
+    "name": "Максим",
+    "prof": "Cool",
+    "img": "https://placehold.jp/3d4070/ffffff/150x150.png",
+    "reviews": 5
+  },
+  "services": [
+    {
+      "id": 1,
+      "title": "Массаж стоп",
+      "time": 60,
+      "price": 500
+    },
+    {
+      "id": 34,
+      "title": "Массаж SPA",
+      "time": 90,
+      "price": 2990
+    }
+  ],
+  "total_price": 3490,
+  "office" : {
+    "id": 1,
+    "name": "MASSANTES OFFICE",
+    "address": "г. Москва, ул. Профсоюзная, 2",
+    "img": "https://placehold.jp/3d4070/ffffff/150x150.png",
+    "addressImg": "https://placehold.jp/3d4070/ffffff/600x300.png"
+  }
+}
