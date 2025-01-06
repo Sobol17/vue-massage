@@ -60,9 +60,10 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if (!to.params.address) {
     const officeStore = useOfficeStore()
+    await officeStore.getOffices();
     next(`/${officeStore.activeOffice.code}/`);
   } else {
     next();
