@@ -22,19 +22,20 @@ const route = useRoute();
 onMounted(() => {
   datesStore.getAvailableDates({
     specialistId: route.query.specialist,
+    branchId: route.query.branch_id
   })
 })
 </script>
 
 <template>
-<main class="bg-white min-h-[100vh] h-100%">
-  <div class="p-4 h-[100vh] relative sm:h-full">
+<main class="bg-white relative min-h-[100vh] h-100%">
+  <div class="p-4 sm:h-full">
     <Breadcrumb />
     <DatePicker
       :available-days="datesStore.availableDates"
       v-model="cartStore.chosenDate"
     />
-    <div class="mt-6 sm:pb-16">
+    <div class="mt-6 pb-[80px]">
       <TimeAccordion
         v-for="time in activeTimeSlots"
         class="py-3"

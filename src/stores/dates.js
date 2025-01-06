@@ -5,18 +5,25 @@ import axiosInst from "@/axios.instance.js";
 export const useDateStore = defineStore('dates', () => {
 
   const dates = ref([])
+  const isLoading = ref(false)
 
-  const getAvailableDates = async ({specialistId = null}) => {
+  const getAvailableDates = async ({specialistId = null, branchId = null}) => {
+    isLoading.value = true
     let url = '/dates.json';
     const params = new URLSearchParams();
 
     if (specialistId) {
-      params.append('specialistId', specialistId);
+      params.append('specialist', specialistId);
+    }
+
+    if (branchId) {
+      params.append('branch_id', branchId);
     }
 
     url += `?${params.toString()}`
     const response = await axiosInst.get(url)
     dates.value = response.data
+    isLoading.value = false
   }
 
   const availableDates = computed(() => {

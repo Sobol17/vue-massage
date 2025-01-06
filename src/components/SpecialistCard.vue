@@ -9,6 +9,7 @@ import {computed} from "vue";
 import {useCartStore} from "@/stores/cart.js";
 import IconPen from "@/components/icons/IconPen.vue";
 import router from "@/router/index.js";
+import getFullNamedDate from "../utils/getFullNamedDate.js";
 
 const props = defineProps({
   id: Number,
@@ -25,11 +26,8 @@ const cartStore = useCartStore()
 
 const selectDate = (time) => {
   cartStore.chosenSpecialist.id = props.id
-
   cartStore.chosenDate = props.dates[0].date
-
   cartStore.chosenTime = time
-
   cartStore.chosenSpecialist = props
 }
 
@@ -65,11 +63,8 @@ const activeDate = (time) => {
         v-model="cartStore.chosenSpecialist.id"
       />
     </div>
-    <RouterLink to="specialists" v-else class="ml-auto">
-      <IconPen class="text-neutral-500" />
-    </RouterLink>
   </div>
-  <div v-if="!inOrder && !inSuccess" class="text-body-m-regular text-neutral-500 mt-2">Ближайшее время для записи: {{dates[0].date}}</div>
+  <div v-if="!inOrder && !inSuccess" class="text-body-m-regular text-neutral-500 mt-2">Ближайшее время для записи: {{getFullNamedDate(dates[0].date)}}</div>
   <div v-if="!inOrder" class="flex items-center flex-wrap gap-x-2 mt-2">
     <AppChip
       v-for="time in dates[0].times"

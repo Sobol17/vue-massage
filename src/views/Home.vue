@@ -4,7 +4,7 @@ import IconArrowDown from "@/components/icons/IconArrowDown.vue";
 import Avatar from "@/components/UI/Avatar.vue";
 import OfficeModal from "@/components/modals/AppModal.vue";
 import AppButton from "@/components/UI/AppButton.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import SelectionRow from "@/components/UI/SelectionRow.vue";
 import IconAccount from "@/components/icons/IconAccount.vue";
 import IconCalendar from "@/components/icons/IconCalendar.vue";
@@ -12,12 +12,17 @@ import IconMore from "@/components/icons/IconMore.vue";
 import IconWallet from "@/components/icons/IconWallet.vue";
 import {useRouter} from "vue-router";
 import Header from "@/components/Header.vue";
+import {useCartStore} from "@/stores/cart.js";
 
 const officeStore = useOfficeStore()
-
+const cartStore = useCartStore()
 const showOfficeModal = ref(false)
 
 const router = useRouter()
+
+onMounted(() => {
+  cartStore.clearCart()
+})
 </script>
 
 <template>
@@ -43,7 +48,12 @@ const router = useRouter()
   <div class="flex flex-col gap-y-4 mt-6">
     <SelectionRow
       title="Выбрать специалиста"
-      link="specialists"
+      :link="{
+        name: 'specialists',
+        query: {
+          branch_id: officeStore.activeOffice?.id
+        }
+      }"
     >
       <IconAccount />
     </SelectionRow>

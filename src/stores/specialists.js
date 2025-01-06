@@ -5,15 +5,22 @@ import axiosInst from "@/axios.instance.js";
 
 export const useSpecialistsStore = defineStore('specialists', () => {
   const specialists = ref([]);
-
+  const isLoading = ref(false);
   const specialist = ref({});
 
   const getSpecialistById = async (id) => {
+    isLoading.value = true
     const response = await axiosInst.get(`/specialist.json?id=${id}`)
     specialist.value = response.data
+    isLoading.value = false
   }
 
-  const getSpecialists = async ({date = null, time = null}) => {
+  const sendReview = async (specialistId, review) => {
+    await axiosInst.post(`/review/${specialistId}`, review)
+  }
+
+  const getSpecialists = async ({date = null, time = null, branchId = null}) => {
+    isLoading.value = true
     let url = '/specialists.json';
     const params = new URLSearchParams();
 
@@ -25,15 +32,22 @@ export const useSpecialistsStore = defineStore('specialists', () => {
       params.append('date', date);
     }
 
+    if (branchId) {
+      params.append('branch_id', branchId);
+    }
+
     url += `?${params.toString()}`
     const response = await axiosInst.get(url)
     specialists.value = response.data
+    isLoading.value = false
   }
 
   return {
     specialists,
     specialist,
     getSpecialistById,
-    getSpecialists
+    getSpecialists,
+    isLoading,
+    sendReview
   }
 })

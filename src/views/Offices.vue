@@ -31,12 +31,16 @@ onMounted(() => {
     <div class="text-center mt-6 text-body-m-medium">Список</div>
   </div>
 
-  <div class="flex flex-col gap-y-3 mt-6">
+  <div v-if="!officeStore.isLoading" class="flex flex-col gap-y-3 mt-6">
     <OfficeCard
       v-for="office in officeStore.offices"
       :office="office"
     />
   </div>
+
+  <teleport to="body">
+    <Loader v-if="officeStore.isLoading" />
+  </teleport>
 </main>
 </template>
 

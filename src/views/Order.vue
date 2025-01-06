@@ -55,7 +55,9 @@ const showModal = ref(false)
 </script>
 
 <template>
-  <main>
+  <main
+    :class="{'bg-white min-h-[100vh]' : cartStore.serviceInBasketCount === 0}"
+  >
     <Breadcrumb class="sticky top-0 bg-white pt-4 pb-2 z-[10]"/>
     <div v-if="cartStore.serviceInBasketCount > 0">
       <div class="bg-white p-4">
@@ -81,7 +83,15 @@ const showModal = ref(false)
             <p class="text-body-m-regular">{{ cartStore.chosenTime }}</p>
           </div>
 
-          <RouterLink to="dates" class="ml-auto">
+          <RouterLink
+            :to="{
+              name: 'dates',
+              query: {
+                specialist: cartStore.chosenSpecialist.id,
+                branch_id: officeStore.activeOffice?.id
+              }
+            }"
+            class="ml-auto">
             <IconPen class="text-neutral-500"/>
           </RouterLink>
         </div>
@@ -145,7 +155,7 @@ const showModal = ref(false)
       </div>
     </div>
 
-    <div v-else class="py-10 px-4 text-center bg-white">
+    <div v-else class="pt-[120px] pb-10 px-4 text-center bg-white">
       <h1 class="text-headline">Ваша корзина услуг пуста</h1>
       <AppButton text="Выбрать услуги" class="w-full mt-4" @click="router.push('services')"/>
     </div>

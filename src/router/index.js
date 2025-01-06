@@ -65,11 +65,15 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const officeStore = useOfficeStore()
-  await officeStore.getOffices();
 
   if (!to.params.address) {
+    await officeStore.getOffices();
     next(`/${officeStore.activeOffice.code}/`);
   } else {
+
+    if (officeStore.offices.length === 0) {
+      await officeStore.getOffices();
+    }
     officeStore.offices.forEach(office => {
       if (office.code === to.params.address) {
         officeStore.changeOffice(office)

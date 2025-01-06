@@ -6,7 +6,7 @@ import axiosInst from "@/axios.instance.js";
 export const useOfficeStore = defineStore('office', () => {
 
   const offices = ref([]);
-
+  const isLoading = ref(false);
   const initialOffice = ref(null);
 
   const activeOffice = computed(() => {
@@ -18,10 +18,14 @@ export const useOfficeStore = defineStore('office', () => {
   }
 
   const getOffices = async () => {
+    isLoading.value = true
     const response = await axiosInst.get('/offices.json')
     offices.value = response.data
-    if (initialOffice.value === null) initialOffice.value = response.data[0]
+
+    if (initialOffice.value === null) initialOffice.value = response.data[0];
+
+    isLoading.value = false
   }
 
-  return { activeOffice, changeOffice, getOffices, offices}
+  return { activeOffice, changeOffice, getOffices, offices, isLoading}
 })

@@ -4,8 +4,10 @@ import {useOfficeStore} from "@/stores/office.js";
 import {useRouter} from "vue-router";
 import Loader from "@/components/UI/Loader.vue";
 import {ref} from "vue";
+import {useCartStore} from "@/stores/cart.js";
 
 const officeStore = useOfficeStore()
+const cartStore = useCartStore()
 const router = useRouter()
 const props = defineProps({
   office: Object
@@ -15,6 +17,7 @@ const loading = ref(false);
 
 const setActiveOffice = () => {
   loading.value = true;
+  cartStore.clearCart()
   setTimeout(() => {
     officeStore.changeOffice(props.office)
     router.push('/')

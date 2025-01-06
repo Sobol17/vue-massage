@@ -9,6 +9,7 @@ import {useCartStore} from "@/stores/cart.js";
 import {onMounted} from "vue";
 import {useOfficeStore} from "@/stores/office.js";
 import {useRoute} from "vue-router";
+import Loader from "@/components/UI/Loader.vue";
 
 const serviceStore = useServiceStore()
 const cartStore = useCartStore()
@@ -28,10 +29,11 @@ onMounted(() => {
 
 <template>
   <main>
-    <div class="bg-white h-full p-4">
+    <div class="bg-white h-full min-h-[100vh] p-4">
       <Breadcrumb class="sticky top-0 bg-white pt-4 z-[10]"/>
-      <h1 class="text-headline pt-6">Выбрать услугу</h1>
-      <div class="scrollbar sticky top-[64px] bg-white z-[10] pt-3">
+      <h1 v-if="serviceStore.services.length !== 0" class="text-headline pt-6">Выбрать услугу</h1>
+
+      <div v-if="!serviceStore.isLoading" class="scrollbar sticky top-[64px] bg-white z-[10] pt-3">
         <div class="flex gap-x-2 max-w-full min-w-max pb-2">
           <CategoryChip
             v-for="item in serviceStore.categories"
@@ -41,35 +43,45 @@ onMounted(() => {
       </div>
 
       <AppInput
+        v-if="!serviceStore.isLoading"
         v-model="serviceStore.searchQuery"
         name="search"
         placeholder="Поиск"
-        class="mt-6"
+        class="mt-3"
         search
       />
 
-      <section :id="service.category" v-for="service in serviceStore.filteredServices">
-        <h3 class="text-headline py-6">{{ service.category }}</h3>
-        <div class="flex flex-col gap-y-6 mb-[120px]">
-          <ServiceCard
-            v-for="item in service.items"
-            :id="item?.id"
-            :img="item?.img"
-            :title="item?.title"
-            :description="item?.description"
-            :time="item?.time"
-            :price="item?.price"
-          />
-        </div>
-      </section>
+      <div v-if="!serviceStore.isLoading" class="mb-[120px]">
+        <section :id="service.category" v-for="service in serviceStore.filteredServices">
+          <h3 class="text-headline py-6">{{ service.category }}</h3>
+          <div class="flex flex-col gap-y-6">
+            <ServiceCard
+              v-for="item in service.items"
+              :id="item?.id"
+              :img="item?.img"
+              :title="item?.title"
+              :description="item?.description"
+              :time="item?.time"
+              :price="item?.price"
+            />
+          </div>
+        </section>
+      </div>
+
+      <div class="text-headline mt-[80px]" v-if="serviceStore.services.length === 0 && !serviceStore.isLoading">
+        Услуги не найдены. Попробуйте изменить параметры.
+      </div>
 
     </div>
 
     <FixedBasket
       v-if="cartStore.serviceInBasketCount > 0"
     />
-
   </main>
+
+  <teleport to="body">
+    <Loader v-if="serviceStore.isLoading" />
+  </teleport>
 </template>
 
 <style scoped>

@@ -3,12 +3,6 @@ import {RouterLink, RouterView, useRoute} from 'vue-router'
 import Header from "@/components/Header.vue";
 import {useOfficeStore} from "@/stores/office.js";
 import {onMounted} from "vue";
-
-const officeStore = useOfficeStore()
-
-onMounted(() => {
-  officeStore.getOffices();
-})
 </script>
 
 <template>

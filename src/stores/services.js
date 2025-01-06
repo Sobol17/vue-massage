@@ -6,7 +6,7 @@ import axiosInst from "@/axios.instance.js";
 export const useServiceStore = defineStore('service', () => {
   // логика работы с услугами
   const services = ref([])
-
+  const isLoading = ref(false)
   const searchQuery = ref('')
 
   const filteredServices = computed(() => {
@@ -25,6 +25,7 @@ export const useServiceStore = defineStore('service', () => {
   })
 
   const getServices = async ({ specialistId = null, time = null, date = null, branchId = null } = {}) => {
+    isLoading.value = true
     let url = '/services.json';
     const params = new URLSearchParams();
 
@@ -50,6 +51,7 @@ export const useServiceStore = defineStore('service', () => {
 
     const response = await axiosInst.get(url);
     services.value = response.data;
+    isLoading.value = false
   };
 
   return {
@@ -57,6 +59,7 @@ export const useServiceStore = defineStore('service', () => {
     categories,
     filteredServices,
     searchQuery,
-    getServices
+    getServices,
+    isLoading
   }
 })

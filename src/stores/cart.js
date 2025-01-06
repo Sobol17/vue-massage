@@ -62,6 +62,15 @@ export const useCartStore = defineStore('cart', () => {
     }
   })
 
+  const clearCart = () => {
+    chosenServices.value = [];
+    chosenSpecialist.value = {
+      id: null
+    }
+    chosenDate.value = null
+    chosenTime.value = ''
+  }
+
   return {
     addServiceToCart,
     serviceInBasketCount ,
@@ -72,6 +81,7 @@ export const useCartStore = defineStore('cart', () => {
     chosenSpecialist,
     chosenDate,
     chosenTime,
-    cartButtonInfo
+    cartButtonInfo,
+    clearCart
   }
 })
