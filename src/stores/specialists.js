@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from "axios";
+import axiosInst from "@/axios.instance.js";
 
 export const useSpecialistsStore = defineStore('specialists', () => {
   const specialists = ref([]);
@@ -8,7 +9,7 @@ export const useSpecialistsStore = defineStore('specialists', () => {
   const specialist = ref({});
 
   const getSpecialistById = async (id) => {
-    const response = await axios.get(`/specialist.json?id=${id}`)
+    const response = await axiosInst.get(`/specialist.json?id=${id}`)
     specialist.value = response.data
   }
 
@@ -25,7 +26,7 @@ export const useSpecialistsStore = defineStore('specialists', () => {
     }
 
     url += `?${params.toString()}`
-    const response = await axios.get(url)
+    const response = await axiosInst.get(url)
     specialists.value = response.data
   }
 

@@ -1,8 +1,9 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from "axios";
+import axiosInst from "@/axios.instance.js";
 
-export const useServiceStore = defineStore('servoce', () => {
+export const useServiceStore = defineStore('service', () => {
   // логика работы с услугами
   const services = ref([])
 
@@ -47,7 +48,7 @@ export const useServiceStore = defineStore('servoce', () => {
       url += `?${params.toString()}`;
     }
 
-    const response = await axios.get(url);
+    const response = await axiosInst.get(url);
     services.value = response.data;
   };
 

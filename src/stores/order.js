@@ -1,6 +1,7 @@
 import {ref, computed, reactive} from 'vue'
 import { defineStore } from 'pinia'
 import axios from "axios";
+import axiosInst from "@/axios.instance.js";
 
 export const useOrderStore = defineStore('order', () => {
   const orderForm = reactive({
@@ -49,7 +50,7 @@ export const useOrderStore = defineStore('order', () => {
   }
 
   const sendOrderForm = async (request) => {
-    await axios.post('/order', request)
+    await axiosInst.post('/order', request)
   }
 
   return {

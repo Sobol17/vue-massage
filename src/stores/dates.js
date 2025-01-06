@@ -2,6 +2,7 @@ import {ref, computed, reactive} from 'vue'
 import { defineStore } from 'pinia'
 import getFullNamedDate from "@/utils/getFullNamedDate.js";
 import axios from "axios";
+import axiosInst from "@/axios.instance.js";
 
 export const useDateStore = defineStore('dates', () => {
 
@@ -16,7 +17,7 @@ export const useDateStore = defineStore('dates', () => {
     }
 
     url += `?${params.toString()}`
-    const response = await axios.get(url)
+    const response = await axiosInst.get(url)
     dates.value = response.data
   }
 

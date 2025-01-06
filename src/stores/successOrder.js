@@ -2,6 +2,7 @@ import {ref, computed, reactive} from 'vue'
 import { defineStore } from 'pinia'
 import getFullNamedDate from "@/utils/getFullNamedDate.js";
 import axios from "axios";
+import axiosInst from "@/axios.instance.js";
 
 export const useSuccessOrderStore = defineStore('success', () => {
 
@@ -16,7 +17,7 @@ export const useSuccessOrderStore = defineStore('success', () => {
   }
 
   const getSuccessOrder = async () => {
-    const response = await axios.get("/success.json");
+    const response = await axiosInst.get("/success.json");
     successOrder.value = response.data;
   }
 
