@@ -10,6 +10,7 @@ import {useCartStore} from "@/stores/cart.js";
 import IconPen from "@/components/icons/IconPen.vue";
 import router from "@/router/index.js";
 import getFullNamedDate from "../utils/getFullNamedDate.js";
+import {useRoute} from "vue-router";
 
 const props = defineProps({
   id: Number,
@@ -21,6 +22,8 @@ const props = defineProps({
   inOrder: Boolean,
   inSuccess: Boolean,
 })
+
+const route = useRoute()
 
 const cartStore = useCartStore()
 
@@ -64,8 +67,8 @@ const activeDate = (time) => {
       />
     </div>
   </div>
-  <div v-if="!inOrder && !inSuccess" class="text-body-m-regular text-neutral-500 mt-2">Ближайшее время для записи: {{getFullNamedDate(dates[0].date)}}</div>
-  <div v-if="!inOrder" class="flex items-center flex-wrap gap-x-2 mt-2">
+  <div v-if="!inOrder && !inSuccess && !cartStore.chosenDate" class="text-body-m-regular text-neutral-500 mt-2">Ближайшее время для записи: {{getFullNamedDate(dates[0].date)}}</div>
+  <div v-if="!inOrder && !cartStore.chosenTime" class="flex items-center flex-wrap gap-x-2 mt-2">
     <AppChip
       v-for="time in dates[0].times"
       :key="time"

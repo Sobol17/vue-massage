@@ -4,7 +4,7 @@ import IconArrowRight from "@/components/icons/IconArrowRight.vue";
 
 defineProps({
   title: String,
-  link: String,
+  link: [Object, String],
 })
 </script>
 

@@ -22,8 +22,8 @@ const router = useRouter()
 onMounted(() => {
   specialistsStore.getSpecialists({
     branchId: route.query.branch_id,
-    date: cartStore.chosenDate,
-    time: cartStore.chosenTime
+    date: route.query.date,
+    time: route.query.time
   })
 })
 </script>
@@ -42,11 +42,10 @@ onMounted(() => {
       <p class="text-body-m-regular flex-grow">Любой специалист</p>
       <AppRadio
         :value="{
-          id: null,
+          id: 0,
         }"
         name="spec"
         v-model="cartStore.chosenSpecialist"
-        @update:modelValue="cartStore.chosenDate = null"
       />
     </div>
 

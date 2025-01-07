@@ -47,8 +47,8 @@ onMounted(() => {
 
   <div class="flex flex-col gap-y-4 mt-6">
     <SelectionRow
-      title="Выбрать специалиста"
-      :link="{
+      :title="$t('welcome')"
+      :link=" {
         name: 'specialists',
         query: {
           branch_id: officeStore.activeOffice?.id

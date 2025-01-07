@@ -29,7 +29,7 @@ export const useServiceStore = defineStore('service', () => {
     let url = '/services.json';
     const params = new URLSearchParams();
 
-    if (specialistId) {
+    if (specialistId && specialistId != 0) {
       params.append('specialist_id', specialistId);
     }
 

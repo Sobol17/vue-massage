@@ -1,8 +1,12 @@
 <script setup>
 import {RouterLink, RouterView, useRoute} from 'vue-router'
-import Header from "@/components/Header.vue";
-import {useOfficeStore} from "@/stores/office.js";
+import {useLangStore} from "@/stores/lang.js";
 import {onMounted} from "vue";
+
+const langStore = useLangStore()
+onMounted(() => {
+  langStore.initLocale();
+});
 </script>
 
 <template>

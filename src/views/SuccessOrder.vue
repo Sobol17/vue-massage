@@ -65,37 +65,37 @@ onMounted(() => {
       />
     </div>
 
-    <div class="flex items-center justify-center gap-x-5 mt-6">
+<!--    <div class="flex items-center justify-center gap-x-5 mt-6">-->
 
-      <RouterLink to="/services" class="flex flex-col items-center cursor-pointer">
-        <div class="size-[50px] rounded-full bg-green-dark flex items-center justify-center border border-solid border-neutral-300">
-          <IconPlus class="text-white" />
-        </div>
-        <p class="text-[13px] mt-1 text-center">Записаться <br> еще</p>
-      </RouterLink>
+<!--      <RouterLink to="/services" class="flex flex-col items-center cursor-pointer">-->
+<!--        <div class="size-[50px] rounded-full bg-green-dark flex items-center justify-center border border-solid border-neutral-300">-->
+<!--          <IconPlus class="text-white" />-->
+<!--        </div>-->
+<!--        <p class="text-[13px] mt-1 text-center">Записаться <br> еще</p>-->
+<!--      </RouterLink>-->
 
-      <div class="flex flex-col items-center cursor-pointer">
-        <div class="size-[50px] rounded-full flex items-center justify-center border border-solid border-neutral-300">
-          <IconCalendar />
-        </div>
-        <p class="text-[13px] mt-1 text-center">Добавить в <br> календарь</p>
-      </div>
+<!--      <div class="flex flex-col items-center cursor-pointer">-->
+<!--        <div class="size-[50px] rounded-full flex items-center justify-center border border-solid border-neutral-300">-->
+<!--          <IconCalendar />-->
+<!--        </div>-->
+<!--        <p class="text-[13px] mt-1 text-center">Добавить в <br> календарь</p>-->
+<!--      </div>-->
 
-      <RouterLink to="dates" class="flex flex-col items-center cursor-pointer">
-        <div class="size-[50px] rounded-full flex items-center justify-center border border-solid border-neutral-300">
-          <IconPathArrow />
-        </div>
-        <p class="text-[13px] mt-1 text-center">Перенести <br> запись</p>
-      </RouterLink>
+<!--      <RouterLink to="dates" class="flex flex-col items-center cursor-pointer">-->
+<!--        <div class="size-[50px] rounded-full flex items-center justify-center border border-solid border-neutral-300">-->
+<!--          <IconPathArrow />-->
+<!--        </div>-->
+<!--        <p class="text-[13px] mt-1 text-center">Перенести <br> запись</p>-->
+<!--      </RouterLink>-->
 
-      <div class="flex flex-col items-center cursor-pointer">
-        <div class="size-[50px] rounded-full flex items-center justify-center border border-solid border-neutral-300">
-          <IconCross class="size-4" />
-        </div>
-        <p class="text-[13px] mt-1 text-center">Отменить <br> запись</p>
-      </div>
+<!--      <div class="flex flex-col items-center cursor-pointer">-->
+<!--        <div class="size-[50px] rounded-full flex items-center justify-center border border-solid border-neutral-300">-->
+<!--          <IconCross class="size-4" />-->
+<!--        </div>-->
+<!--        <p class="text-[13px] mt-1 text-center">Отменить <br> запись</p>-->
+<!--      </div>-->
 
-    </div>
+<!--    </div>-->
 
     <h3 class="text-body-l-medium mt-6">Услуги</h3>
 
@@ -116,7 +116,7 @@ onMounted(() => {
 
     <div class="flex items-baseline justify-between">
       <div class="text-body-m-regular">Итого</div>
-      <div class="text-body-m-medium">{{formatPrice(successOrderStore.successOrder.totalPrice)}}</div>
+      <div class="text-body-m-medium">{{formatPrice(successOrderStore.successOrder.total_price)}}</div>
     </div>
 
 <!--    <div class="flex items-center gap-x-3 mt-4">-->

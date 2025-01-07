@@ -23,6 +23,7 @@ const form = reactive({
   phone: '',
   email: '',
   comment: '',
+  count: 0
 })
 
 const formError = reactive({
@@ -73,7 +74,7 @@ onMounted(() => {
       <div @click="showForm = true" class="bg-neutral-100 text-center rounded-[16px] mt-2 p-4">
         <p>Оцените и оставьте отзыв</p>
         <div class="flex gap-x-2 items-center justify-center">
-          <IconStarGray v-for="i in 5" class="size-8 cursor-pointer" />
+          <IconStarGray v-for="i in 5" class="size-8 cursor-pointer text-[#d1d5dc]" />
         </div>
       </div>
 
@@ -94,6 +95,14 @@ onMounted(() => {
     >
       <p class="text-headline">Оцените работу мастера</p>
       <div class="flex flex-col gap-y-4 mt-6">
+        <div class="flex gap-x-2 items-center justify-center">
+          <IconStarGray
+            v-for="(i, index) in 5"
+            class="size-8 cursor-pointer text-[#d1d5dc]"
+            :class="{ 'text-[#FFC107]': index + 1 <= form.count }"
+            @click="form.count = index + 1"
+          />
+        </div>
         <div>
           <AppInput v-model="form.name" name="name" placeholder="Ваше имя*" :error="formError.name"/>
           <p v-if="formError.name" class="text-[12px] text-red pt-1">Указите ваше имя</p>

@@ -60,7 +60,8 @@ onMounted(() => {
           name: 'services',
           query: {
             date: cartStore.chosenDate,
-            time: cartStore.chosenTime
+            time: cartStore.chosenTime,
+            specialist: cartStore.chosenSpecialist.id
           }
         })"
       />
