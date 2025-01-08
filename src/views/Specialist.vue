@@ -10,6 +10,7 @@ import AppButton from "@/components/UI/AppButton.vue";
 import {useRoute, useRouter} from "vue-router";
 import {onMounted} from "vue";
 import Loader from "@/components/UI/Loader.vue";
+import {useI18n} from "vue-i18n";
 
 
 const specialistsStore = useSpecialistsStore()
@@ -18,6 +19,7 @@ const cartStore = useCartStore()
 const route = useRoute()
 
 const router = useRouter()
+const {t, locale} = useI18n();
 
 onMounted(() => {
   specialistsStore.getSpecialists({
@@ -25,6 +27,7 @@ onMounted(() => {
     date: route.query.date,
     time: route.query.time
   })
+  locale.value = route.params.locale
 })
 </script>
 
@@ -33,13 +36,13 @@ onMounted(() => {
   <div class="p-4">
     <Breadcrumb />
 
-    <h1 v-if="specialistsStore.specialists.length !== 0" class="text-headline mt-4">Выбрать специалиста</h1>
+    <h1 v-if="specialistsStore.specialists.length !== 0" class="text-headline mt-4">{{ $t('specialist_headline') }}</h1>
 
     <div v-if="specialistsStore.specialists.length !== 0" @click="check = true" class="flex items-center gap-x-3 mt-6 cursor-pointer">
       <div class="flex items-center justify-center rounded-full size-[48px] bg-neutral-200">
         <IconService />
       </div>
-      <p class="text-body-m-regular flex-grow">Любой специалист</p>
+      <p class="text-body-m-regular flex-grow">{{ $t('specialist_any') }}</p>
       <AppRadio
         :value="{
           id: 0,
@@ -64,7 +67,7 @@ onMounted(() => {
     </div>
 
     <div class="text-headline mt-[80px]" v-if="specialistsStore.specialists.length === 0 && !specialistsStore.isLoading">
-      Специалисты не найдены. Попробуйте изменить параметры.
+      {{ $t('specialist_not_found') }}
     </div>
 
   </div>
@@ -75,7 +78,7 @@ onMounted(() => {
 
   <div v-if="cartStore.chosenSpecialist.id !== null && cartStore.serviceInBasketCount === 0 && cartStore.chosenDate !== null" class="mt-4 absolute bottom-6 left-4 right-4">
     <AppButton
-      text="Выбрать услугу"
+      :text="locale === 'ru' ? 'Выбрать услугу' : 'Select service'"
       @click="router.push(
         {
           name: 'services',

@@ -11,6 +11,7 @@ import {useRoute, useRouter} from "vue-router";
 import {useSpecialistsStore} from "@/stores/specialists.js";
 import AppModal from "@/components/modals/AppModal.vue";
 import AppInput from "@/components/UI/AppInput.vue";
+import {useI18n} from "vue-i18n";
 
 const specialistStore = useSpecialistsStore()
 const route = useRoute()
@@ -49,6 +50,8 @@ const sendReviewForm = async () => {
 
 onMounted(() => {
   specialistStore.getSpecialistById(route.params.id)
+  const {t, locale} = useI18n();
+  locale.value = route.params.locale
 })
 </script>
 

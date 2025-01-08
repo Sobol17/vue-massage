@@ -17,6 +17,8 @@ import formatTime from "../utils/formatTime.js";
 import formatPrice from "../utils/formatPrice.js";
 import CopyChip from "@/components/UI/CopyChip.vue";
 import {onMounted, ref} from "vue";
+import {useI18n} from "vue-i18n";
+import {useRoute} from "vue-router";
 
 const successOrderStore = useSuccessOrderStore()
 
@@ -33,8 +35,12 @@ const copyLink = async () => {
   }
 };
 
+const route = useRoute();
+
 onMounted(() => {
   successOrderStore.getSuccessOrder();
+  const {t, locale} = useI18n();
+  locale.value = route.params.locale
 })
 </script>
 
@@ -47,7 +53,7 @@ onMounted(() => {
 
       <div class="inline-flex items-center rounded-[8px] gap-x-2 text-green-txt bg-green-light py-1 px-2">
         <IconCheck class="size-4" />
-        <p>Вы записаны</p>
+        <p>{{$t('order_success')}}</p>
       </div>
 
       <h1 class="text-headline mt-4">{{ successOrderStore.successOrder.date }}</h1>
@@ -97,7 +103,7 @@ onMounted(() => {
 
 <!--    </div>-->
 
-    <h3 class="text-body-l-medium mt-6">Услуги</h3>
+    <h3 class="text-body-l-medium mt-6">{{$t('order_service')}}</h3>
 
     <div
       class="flex flex-col gap-y-3 mt-3"
@@ -106,7 +112,7 @@ onMounted(() => {
       <div class="flex items-start justify-between">
         <div>
           <p class="text-body-m-regular mb-1">{{ service.title }}</p>
-          <p class="text-body-s-regular text-neutral-500">{{ formatTime(service.time) }}</p>
+          <p class="text-body-s-regular text-neutral-500">{{ formatTime(service.time, route.params.locale) }}</p>
         </div>
         <div class="text-body-m-medium">{{ formatPrice(service.price) }}</div>
       </div>
@@ -115,7 +121,7 @@ onMounted(() => {
     <hr class="my-4 text-neutral-300">
 
     <div class="flex items-baseline justify-between">
-      <div class="text-body-m-regular">Итого</div>
+      <div class="text-body-m-regular">{{ $t('order_total') }}</div>
       <div class="text-body-m-medium">{{formatPrice(successOrderStore.successOrder.total_price)}}</div>
     </div>
 
@@ -131,7 +137,7 @@ onMounted(() => {
 <!--      </div>-->
 <!--    </div>-->
 
-    <h3 class="text-body-l-medium mt-6">Контакты</h3>
+    <h3 class="text-body-l-medium mt-6">{{ $t('order_contacts') }}</h3>
 
     <div class="flex items-center gap-x-2 mt-4">
       <img class="size-[48px] rounded-[12px]" :src="successOrderStore.successOrder.office?.img" alt="">

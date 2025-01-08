@@ -10,18 +10,22 @@ import IconAccount from "@/components/icons/IconAccount.vue";
 import IconCalendar from "@/components/icons/IconCalendar.vue";
 import IconMore from "@/components/icons/IconMore.vue";
 import IconWallet from "@/components/icons/IconWallet.vue";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import Header from "@/components/Header.vue";
 import {useCartStore} from "@/stores/cart.js";
+import {useI18n} from "vue-i18n";
 
 const officeStore = useOfficeStore()
 const cartStore = useCartStore()
 const showOfficeModal = ref(false)
 
 const router = useRouter()
+const route = useRoute()
 
 onMounted(() => {
   cartStore.clearCart()
+  const {t, locale} = useI18n();
+  locale.value = route.params.locale
 })
 </script>
 
@@ -47,7 +51,7 @@ onMounted(() => {
 
   <div class="flex flex-col gap-y-4 mt-6">
     <SelectionRow
-      :title="$t('welcome')"
+      :title="$t('home_specialists')"
       :link=" {
         name: 'specialists',
         query: {
@@ -58,13 +62,13 @@ onMounted(() => {
       <IconAccount />
     </SelectionRow>
     <SelectionRow
-      title="Выбрать дату"
+      :title="$t('home_date')"
       link="dates"
     >
       <IconCalendar />
     </SelectionRow>
     <SelectionRow
-      title="Выбрать услуги"
+      :title="$t('home_services')"
       link="services"
     >
       <IconMore />
@@ -86,8 +90,8 @@ onMounted(() => {
       <div class="mt-6 text-center">
         <h2 class="text-headline">{{ officeStore.activeOffice?.title }}</h2>
         <h3 class="text-body-m-regular text-neutral-500 pt-2">{{ officeStore.activeOffice?.address }}</h3>
-        <AppButton text="О филиале" class="mt-8 w-full" @click="$emit('close')" />
-        <AppButton text="Все филиалы" class="mt-3 w-full" @click="router.push({name: 'offices'})" />
+        <AppButton :text="$t('modal_about_branch')" class="mt-8 w-full" @click="$emit('close')" />
+        <AppButton :text="$t('modal_all_branch')" class="mt-3 w-full" @click="router.push({name: 'offices'})" />
       </div>
     </OfficeModal>
   </Transition>

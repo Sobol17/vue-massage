@@ -10,26 +10,26 @@ const orderStore = useOrderStore()
 
 <template>
   <div class="rounded-[20px] bg-white mt-3 p-4">
-    <h3 class="text-body-l-bold">Ваши данные</h3>
+    <h3 class="text-body-l-bold">{{$t('order_form')}}</h3>
     <hr class="my-2 text-neutral-300 mx-[-16px]">
 
     <div class="mb-4">
-      <p class="text-body-s-regular text-neutral-500 mb-1">Имя *</p>
+      <p class="text-body-s-regular text-neutral-500 mb-1">{{$t('order_form_name')}} *</p>
       <AppInput
         v-model="orderStore.orderForm.name"
         name="name"
-        placeholder="Ваше имя"
+        :placeholder="$t('order_form_name')"
         :error="orderStore.errors.name"
       />
       <p v-if="orderStore.errors.name" class="text-[12px] text-red pt-1">Введите имя</p>
     </div>
 
     <div class="mb-4">
-      <p class="text-body-s-regular text-neutral-500 mb-1">Телефон *</p>
+      <p class="text-body-s-regular text-neutral-500 mb-1">{{$t('order_form_phone')}} *</p>
       <AppInput
         v-model="orderStore.orderForm.phone"
         name="tel"
-        placeholder="Телефон"
+        :placeholder="$t('order_form_name')"
         v-mask="'+7 ### ###-##-##'"
         :error="orderStore.errors.phone"
       />
@@ -46,16 +46,16 @@ const orderStore = useOrderStore()
     </div>
 
     <div class="mb-4">
-      <p class="text-body-s-regular text-neutral-500 mb-1">Комментарий к записи</p>
+      <p class="text-body-s-regular text-neutral-500 mb-1">{{$t('order_form_comment')}}</p>
       <AppInput
         v-model="orderStore.orderForm.comment"
         name="comment"
-        placeholder="Комментарий к записи"
+        :placeholder="$t('order_form_name')"
       />
     </div>
 
     <div>
-      <p class="text-body-s-regular text-neutral-500 mb-1">Напоминание</p>
+      <p class="text-body-s-regular text-neutral-500 mb-1">{{$t('order_form_send')}}</p>
       <div class="relative">
         <select class="select" v-model="orderStore.orderForm.remind">
           <option value="0" class="select__option"> Не отправлять</option>

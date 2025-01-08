@@ -10,6 +10,7 @@ import {onMounted} from "vue";
 import {useOfficeStore} from "@/stores/office.js";
 import {useRoute} from "vue-router";
 import Loader from "@/components/UI/Loader.vue";
+import {useI18n} from "vue-i18n";
 
 const serviceStore = useServiceStore()
 const cartStore = useCartStore()
@@ -24,6 +25,9 @@ onMounted(() => {
     date: cartStore.chosenDate,
     branchId: officeStore.activeOffice?.id
   })
+
+  const {t, locale} = useI18n();
+  locale.value = route.params.locale
 })
 </script>
 
@@ -31,7 +35,7 @@ onMounted(() => {
   <main>
     <div class="bg-white h-full min-h-[100vh] p-4">
       <Breadcrumb class="sticky top-0 bg-white pt-4 z-[10]"/>
-      <h1 v-if="serviceStore.services.length !== 0" class="text-headline pt-6">Выбрать услугу</h1>
+      <h1 v-if="serviceStore.services.length !== 0" class="text-headline pt-6">{{$t('service_title')}}</h1>
 
       <div v-if="!serviceStore.isLoading" class="scrollbar sticky top-[64px] bg-white z-[10] pt-3">
         <div class="flex gap-x-2 max-w-full min-w-max pb-2">
@@ -46,7 +50,7 @@ onMounted(() => {
         v-if="!serviceStore.isLoading"
         v-model="serviceStore.searchQuery"
         name="search"
-        placeholder="Поиск"
+        :placeholder="$t('service_search')"
         class="mt-3"
         search
       />
@@ -69,7 +73,7 @@ onMounted(() => {
       </div>
 
       <div class="text-headline mt-[80px]" v-if="serviceStore.services.length === 0 && !serviceStore.isLoading">
-        Услуги не найдены. Попробуйте изменить параметры.
+        {{$t('service_not_found')}}
       </div>
 
     </div>

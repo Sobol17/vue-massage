@@ -48,7 +48,9 @@
 import IconArrowLeft from '@/components/icons/IconArrowLeft.vue';
 import IconArrowRight from '@/components/icons/IconArrowRight.vue';
 import { computed, ref, watch } from 'vue';
-
+import {useI18n} from "vue-i18n";
+import {useRoute} from "vue-router";
+const route = useRoute();
 const props = defineProps({
   modelValue: {
     type: [Date, String],
@@ -71,7 +73,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'clicked']);
 
-const months = [
+const months = route.params.locale === 'ru' ? [
   'Январь',
   'Февраль',
   'Март',
@@ -84,7 +86,7 @@ const months = [
   'Октябрь',
   'Ноябрь',
   'Декабрь',
-];
+] : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const currentMonth = ref(new Date().getMonth());
 const currentYear = ref(new Date().getFullYear());
@@ -99,7 +101,7 @@ watch(
   }
 );
 
-const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+const weekdays = route.params.locale === 'ru' ? ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'] : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 const daysInMonth = computed(() => {
   const year = currentYear.value;

@@ -10,13 +10,18 @@ import AppModal from "@/components/modals/AppModal.vue";
 import IconCross from "@/components/icons/IconCross.vue";
 import {useRouter} from "vue-router";
 import {useCartStore} from "@/stores/cart.js";
+import {useI18n} from "vue-i18n";
 
 const router = useRouter()
 const serviceStore = useServiceStore()
 const cartStore = useCartStore()
 
+const {locale} = useI18n()
+
+const words = locale.value === 'ru' ? ['услуга', 'услуги', 'услуг'] : ['service', 'services', 'services']
+
 const transformWord = computed(() => {
-  return numWord(cartStore.serviceInBasketCount, ['услуга', 'услуги', 'услуг'])
+  return numWord(cartStore.serviceInBasketCount, words)
 })
 
 const showModal = ref(false)

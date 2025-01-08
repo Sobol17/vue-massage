@@ -6,11 +6,16 @@ import OfficeCard from "@/components/OfficeCard.vue";
 import {onMounted, ref} from "vue";
 import Loader from "@/components/UI/Loader.vue";
 import {useOfficeStore} from "@/stores/office.js";
+import {useI18n} from "vue-i18n";
+import {useRoute} from "vue-router";
 
 const officeStore = useOfficeStore()
+const route = useRoute()
 
 onMounted(() => {
   officeStore.getOffices();
+  const {t, locale} = useI18n();
+  locale.value = route.params.locale
 })
 </script>
 
@@ -19,16 +24,16 @@ onMounted(() => {
   <div class="bg-white p-4">
     <RouterLink class="flex items-center gap-x-2" to="/">
       <IconArrowLeft md/>
-      <div class="text-body-m-regular">Выберите филиал</div>
+      <div class="text-body-m-regular">{{$t('branches_back')}}</div>
     </RouterLink>
 
     <div class="chose-city">
       <IconLocation class="ml-auto" />
-      <div class="text-body-m-regular">Город</div>
+      <div class="text-body-m-regular">{{ $t('branches_city') }}</div>
       <IconPen class="ml-auto" />
     </div>
 
-    <div class="text-center mt-6 text-body-m-medium">Список</div>
+    <div class="text-center mt-6 text-body-m-medium">{{ $t('branches_list') }}</div>
   </div>
 
   <div v-if="!officeStore.isLoading" class="flex flex-col gap-y-3 mt-6">

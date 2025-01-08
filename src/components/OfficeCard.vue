@@ -5,6 +5,7 @@ import {useRouter} from "vue-router";
 import Loader from "@/components/UI/Loader.vue";
 import {ref} from "vue";
 import {useCartStore} from "@/stores/cart.js";
+import {useI18n} from "vue-i18n";
 
 const officeStore = useOfficeStore()
 const cartStore = useCartStore()
@@ -15,12 +16,14 @@ const props = defineProps({
 
 const loading = ref(false);
 
+const {locale} = useI18n()
+
 const setActiveOffice = () => {
   loading.value = true;
   cartStore.clearCart()
   setTimeout(() => {
     officeStore.changeOffice(props.office)
-    router.push('/')
+    router.push(`/${locale.value}`)
     loading.value = false;
   }, 300)
 }

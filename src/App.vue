@@ -1,12 +1,7 @@
 <script setup>
 import {RouterLink, RouterView, useRoute} from 'vue-router'
-import {useLangStore} from "@/stores/lang.js";
 import {onMounted} from "vue";
 
-const langStore = useLangStore()
-onMounted(() => {
-  langStore.initLocale();
-});
 </script>
 
 <template>

@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import {useRoute} from "vue-router";
 
 export const useCartStore = defineStore('cart', () => {
   // логика работы с корзиной
@@ -38,15 +39,17 @@ export const useCartStore = defineStore('cart', () => {
     }, 0)
   });
 
+  const route = useRoute();
+
   const cartButtonInfo = computed(() => {
     if (serviceInBasketCount.value > 0 && chosenSpecialist.value !== null && chosenDate.value !== null) {
       return {
-        title: 'Готово',
+        title: route.params.locale === 'ru' ? 'Готово' : 'Done',
         link: 'order'
       }
     } else if (serviceInBasketCount.value > 0 && chosenSpecialist.value.id !== null && chosenDate.value === null) {
       return {
-        title: 'Выбрать дату и время',
+        title: route.params.locale === 'ru' ? 'Выбрать дату и время' : 'Select date and time',
         link: {
           name: 'dates',
           query: {
@@ -56,7 +59,7 @@ export const useCartStore = defineStore('cart', () => {
       }
     } else {
       return {
-        title: 'Выбрать специалиста',
+        title: route.params.locale === 'ru' ? 'Выбрать специалиста' : 'Select specialist',
         link: 'specialists'
       }
     }

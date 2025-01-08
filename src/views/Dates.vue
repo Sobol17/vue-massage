@@ -8,6 +8,7 @@ import AppButton from "@/components/UI/AppButton.vue";
 import {useRoute, useRouter} from "vue-router";
 import {useCartStore} from "@/stores/cart.js";
 import {useDateStore} from "@/stores/dates.js";
+import {useI18n} from "vue-i18n";
 
 const cartStore = useCartStore()
 const datesStore = useDateStore()
@@ -24,6 +25,8 @@ onMounted(() => {
     specialistId: route.query.specialist,
     branchId: route.query.branch_id
   })
+  const {t, locale} = useI18n();
+  locale.value = route.params.locale
 })
 </script>
 

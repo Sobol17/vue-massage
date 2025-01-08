@@ -12,11 +12,12 @@ import {useOrderStore} from "@/stores/order.js";
 import getFullNamedDate from "../utils/getFullNamedDate.js";
 import SpecialistCard from "@/components/SpecialistCard.vue";
 import IconCalendar from "@/components/icons/IconCalendar.vue";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {useOfficeStore} from "@/stores/office.js";
 import IconCross from "@/components/icons/IconCross.vue";
 import AppModal from "@/components/modals/AppModal.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
+import {useI18n} from "vue-i18n";
 
 const cartStore = useCartStore()
 const orderStore = useOrderStore()
@@ -52,6 +53,12 @@ const sendForm = () => {
 }
 
 const showModal = ref(false)
+const route = useRoute();
+
+onMounted(() => {
+  const {t, locale} = useI18n();
+  locale.value = route.params.locale
+})
 </script>
 
 <template>
@@ -61,7 +68,7 @@ const showModal = ref(false)
     <Breadcrumb class="sticky top-0 bg-white pt-4 pb-2 z-[10]"/>
     <div v-if="cartStore.serviceInBasketCount > 0">
       <div class="bg-white p-4">
-        <h1 class="text-headline pt-6">Детали для записи</h1>
+        <h1 class="text-headline pt-6">{{ $t('order_title') }}</h1>
         <SpecialistCard
           class="mt-6"
           :inOrder="true"
@@ -79,7 +86,7 @@ const showModal = ref(false)
           </div>
 
           <div>
-            <p class="text-body-s-regular text-neutral-500">{{ getFullNamedDate(cartStore.chosenDate) }}</p>
+            <p class="text-body-s-regular text-neutral-500">{{ getFullNamedDate(cartStore.chosenDate, route.params.locale) }}</p>
             <p class="text-body-m-regular">{{ cartStore.chosenTime }}</p>
           </div>
 
@@ -99,8 +106,8 @@ const showModal = ref(false)
         <hr class="my-4 text-neutral-300"/>
 
         <div class="flex gap-x-1 items-baseline">
-          <div class="text-body-l-bold">Услуги</div>
-          <div class="text-neutral-500 text-body-m-regular">{{ formatTime(cartStore.cartTotalTime) }}</div>
+          <div class="text-body-l-bold">{{ $t('order_service') }}</div>
+          <div class="text-neutral-500 text-body-m-regular">{{ formatTime(cartStore.cartTotalTime, route.params.locale) }}</div>
           <IconPen class="text-neutral-500 ml-auto" @click="showModal = true"/>
         </div>
 
@@ -119,7 +126,7 @@ const showModal = ref(false)
         <hr class="my-4 text-neutral-300"/>
 
         <div class="flex items-baseline justify-between">
-          <div class="text-body-m-regular">Итого</div>
+          <div class="text-body-m-regular">{{ $t('order_total') }}</div>
           <div class="text-body-m-regular">{{ formatPrice(cartStore.cartTotalPrice) }}</div>
         </div>
       </div>
@@ -142,22 +149,20 @@ const showModal = ref(false)
 <!--        <hr class="mx-[-16px] my-4 text-neutral-300">-->
 
         <div class="flex items-center justify-between">
-          <p class="text-body-s-regular">Итого</p>
+          <p class="text-body-s-regular">{{ $t('order_total') }}</p>
           <p class="text-body-s-regular">{{ formatPrice(cartStore.cartTotalPrice) }}</p>
         </div>
       </div>
 
       <div class="bg-white p-4 mt-3">
-        <AppButton @click="sendForm" text="Записаться" class="w-full"/>
-        <p class="text-[12px] text-neutral-500 mt-3">Нажимая на кнопку, я предоставляю ООО "Уайклаентс" согласие на
-          обработку своих персональных данных, а также
-          подтверждаю ознакомление и согласие с Политикой конфиденциальности и Пользовательским соглашением</p>
+        <AppButton @click="sendForm" :text="$t('order_btn')" class="w-full"/>
+        <p class="text-[12px] text-neutral-500 mt-3">{{ $t('order_notify') }}</p>
       </div>
     </div>
 
     <div v-else class="pt-[120px] pb-10 px-4 text-center bg-white">
-      <h1 class="text-headline">Ваша корзина услуг пуста</h1>
-      <AppButton text="Выбрать услуги" class="w-full mt-4" @click="router.push('services')"/>
+      <h1 class="text-headline">{{ $t('order_empty') }}</h1>
+      <AppButton :text="$t('home_services')" class="w-full mt-4" @click="router.push('services')"/>
     </div>
   </main>
 

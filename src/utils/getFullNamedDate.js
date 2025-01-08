@@ -1,11 +1,11 @@
-export default function getFullNamedDate(inputDate) {
+export default function getFullNamedDate(inputDate, lang = 'ru') {
   const [year, month, day] = inputDate.split('-').map(Number);
 
   const date = new Date(year, month - 1, day);
 
-  const daysOfWeek = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+  const daysOfWeek = lang === 'ru' ? ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'] : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-  const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+  const months = lang === 'ru' ? ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'] : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   const dayOfWeek = daysOfWeek[date.getDay()];
   const dayOfMonth = date.getDate();
