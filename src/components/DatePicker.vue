@@ -2,7 +2,8 @@
   <div class="date-picker">
     <div class="calendar">
       <div class="header">
-        <div class="text-body-m-regular flex items-center gap-x-1 rounded-[12px] border-solid border-2 border-neutral-300 py-1 px-3">
+        <div
+          class="text-body-m-regular flex items-center gap-x-1 rounded-[12px] border-solid border-2 border-neutral-300 py-1 px-3">
           <span>{{ months[currentMonth] }}</span>
           <span class="text-gray-300">{{ currentYear }}</span>
         </div>
@@ -13,15 +14,15 @@
           type="button"
           :disabled="isCurrentMonth"
         >
-          <IconArrowLeft md />
+          <IconArrowLeft md/>
         </button>
         <button class="p-4" @click="nextMonth" type="button" :disabled="isNextMonthDisabled">
-          <IconArrowRight md />
+          <IconArrowRight md/>
         </button>
       </div>
       <div class="weekdays">
         <span class="text-body-m-regular text-neutral-500 size-10" v-for="day in weekdays">
-          {{day}}
+          {{ day }}
         </span>
       </div>
       <div class="days">
@@ -47,9 +48,10 @@
 <script setup>
 import IconArrowLeft from '@/components/icons/IconArrowLeft.vue';
 import IconArrowRight from '@/components/icons/IconArrowRight.vue';
-import { computed, ref, watch } from 'vue';
+import {computed, ref, watch} from 'vue';
 import {useI18n} from "vue-i18n";
 import {useRoute} from "vue-router";
+
 const route = useRoute();
 const props = defineProps({
   modelValue: {
@@ -73,25 +75,26 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'clicked']);
 
-const months = route.params.locale === 'ru' ? [
-  'Январь',
-  'Февраль',
-  'Март',
-  'Апрель',
-  'Май',
-  'Июнь',
-  'Июль',
-  'Август',
-  'Сентябрь',
-  'Октябрь',
-  'Ноябрь',
-  'Декабрь',
-] : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const months = ref([])
+
+const weekdays = ref([])
+
+watch(() => route.params.locale,
+  () => {
+    if (route.params.locale === 'ru') {
+      months.value = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+      weekdays.value = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+    } else {
+      months.value = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      weekdays.value = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    }
+  },
+  {immediate: true}
+);
 
 const currentMonth = ref(new Date().getMonth());
 const currentYear = ref(new Date().getFullYear());
 const selectedDate = ref(props.modelValue);
-const minimumDate = ref(props.minDate ? new Date(props.minDate) : null);
 
 watch(
   () => props.modelValue,
@@ -100,8 +103,6 @@ watch(
     emit('clicked', true);
   }
 );
-
-const weekdays = route.params.locale === 'ru' ? ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'] : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 const daysInMonth = computed(() => {
   const year = currentYear.value;

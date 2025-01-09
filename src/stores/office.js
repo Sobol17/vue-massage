@@ -17,9 +17,9 @@ export const useOfficeStore = defineStore('office', () => {
     initialOffice.value = office
   }
 
-  const getOffices = async () => {
+  const getOffices = async (locale = 'ru') => {
     isLoading.value = true
-    const response = await axiosInst.get('/offices.json')
+    const response = await axiosInst.get(`/offices.json?locale=${locale}`)
     offices.value = response.data
 
     if (initialOffice.value === null) initialOffice.value = response.data[0];

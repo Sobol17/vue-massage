@@ -14,6 +14,7 @@ import {useRoute, useRouter} from "vue-router";
 import Header from "@/components/Header.vue";
 import {useCartStore} from "@/stores/cart.js";
 import {useI18n} from "vue-i18n";
+import LangSwitch from "@/components/langSwitch.vue";
 
 const officeStore = useOfficeStore()
 const cartStore = useCartStore()
@@ -25,13 +26,14 @@ const route = useRoute()
 onMounted(() => {
   cartStore.clearCart()
   const {t, locale} = useI18n();
-  locale.value = route.params.locale
+  locale.value = route.params.locale;
 })
 </script>
 
 <template>
 <main class="rounded-t-[24px] bg-white p-4 mt-[60px] h-[100vh] sm:mx-2">
   <div class="relative">
+    <LangSwitch class="absolute right-0 top-0" />
     <Avatar
       class="absolute left-1/2 translate-x-[-50%] top-[-56px] size-[128px]"
       image="https://placehold.jp/3d4070/ffffff/150x150.png"
@@ -55,7 +57,7 @@ onMounted(() => {
       :link=" {
         name: 'specialists',
         query: {
-          branch_id: officeStore.activeOffice?.id
+          branchId: officeStore.activeOffice?.id
         }
       }"
     >
@@ -63,13 +65,23 @@ onMounted(() => {
     </SelectionRow>
     <SelectionRow
       :title="$t('home_date')"
-      link="dates"
+      :link=" {
+        name: 'dates',
+        query: {
+          branchId: officeStore.activeOffice?.id
+        }
+      }"
     >
       <IconCalendar />
     </SelectionRow>
     <SelectionRow
       :title="$t('home_services')"
-      link="services"
+      :link=" {
+        name: 'services',
+        query: {
+          branchId: officeStore.activeOffice?.id
+        }
+      }"
     >
       <IconMore />
     </SelectionRow>

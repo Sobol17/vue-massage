@@ -8,8 +8,6 @@ import Order from "@/views/Order.vue";
 import SuccessOrder from "@/views/SuccessOrder.vue";
 import SpecialistId from "@/views/SpecialistId.vue";
 import {useOfficeStore} from "@/stores/office.js";
-import {useI18n} from "vue-i18n";
-import {useLangStore} from "@/stores/lang.js";
 
 const router = createRouter({
   history: createWebHistory(process.env.NODE_ENV === 'production' ? '/vue-massage/' : '/'),
@@ -68,14 +66,14 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const officeStore = useOfficeStore();
   if (!to.params.locale) {
-    await officeStore.getOffices();
+    await officeStore.getOffices('ru');
     next(`/ru/${officeStore.activeOffice.code}`);
   } else if (!to.params.address) {
-    await officeStore.getOffices();
+    await officeStore.getOffices(to.params.locale);
     next(`/${to.params.locale}/${officeStore.activeOffice.code}/`);
   } else {
     if (officeStore.offices.length === 0) {
-      await officeStore.getOffices();
+      await officeStore.getOffices(to.params.locale);
     }
     if (!officeStore.offices.some(office => office.code === to.params.address)) {
       next(`/${to.params.locale}/${officeStore.activeOffice.code}/`);

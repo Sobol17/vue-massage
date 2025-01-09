@@ -23,8 +23,11 @@ onMounted(() => {
     specialistId: route.query.specialist,
     time: cartStore.chosenTime,
     date: cartStore.chosenDate,
-    branchId: officeStore.activeOffice?.id
+    branchId: officeStore.activeOffice?.id,
+    locale: route.params.locale
   })
+
+  cartStore.chosenServices = [];
 
   const {t, locale} = useI18n();
   locale.value = route.params.locale

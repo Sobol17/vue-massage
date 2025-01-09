@@ -19,13 +19,14 @@ const activeTimeSlots = computed(() => {
 })
 
 const route = useRoute();
+const {t, locale} = useI18n();
 
 onMounted(() => {
   datesStore.getAvailableDates({
     specialistId: route.query.specialist,
-    branchId: route.query.branch_id
+    branchId: route.query.branchId,
+    locale: route.params.locale
   })
-  const {t, locale} = useI18n();
   locale.value = route.params.locale
 })
 </script>
@@ -58,12 +59,13 @@ onMounted(() => {
       <AppButton
         v-if="cartStore.chosenTime && cartStore.chosenSpecialist.id !== null"
         class="w-full"
-        text="Выбрать услугу"
+        :text="$t('home_services')"
         @click="router.push({
           name: 'services',
           query: {
             date: cartStore.chosenDate,
             time: cartStore.chosenTime,
+            branchId: route.query.branchId,
             specialist: cartStore.chosenSpecialist.id
           }
         })"
@@ -77,7 +79,8 @@ onMounted(() => {
           name: 'specialists',
           query: {
             date: cartStore.chosenDate,
-            time: cartStore.chosenTime
+            time: cartStore.chosenTime,
+            branchId: route.query.branchId
           }
         })"
       />

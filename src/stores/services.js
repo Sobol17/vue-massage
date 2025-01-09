@@ -24,7 +24,7 @@ export const useServiceStore = defineStore('service', () => {
     return services.value.map(service => service.category)
   })
 
-  const getServices = async ({ specialistId = null, time = null, date = null, branchId = null } = {}) => {
+  const getServices = async ({ specialistId = null, time = null, date = null, branchId = null, locale = 'ru' } = {}) => {
     isLoading.value = true
     let url = '/services.json';
     const params = new URLSearchParams();
@@ -44,6 +44,8 @@ export const useServiceStore = defineStore('service', () => {
     if (branchId) {
       params.append('branch_id', branchId);
     }
+
+    params.append('locale', locale);
 
     if (Array.from(params).length > 0) {
       url += `?${params.toString()}`;

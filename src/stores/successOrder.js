@@ -14,8 +14,8 @@ export const useSuccessOrderStore = defineStore('success', () => {
     console.log('Запись перенесена, тут будет запрос на замену записи')
   }
 
-  const getSuccessOrder = async () => {
-    const response = await axiosInst.get("/success.json");
+  const getSuccessOrder = async (locale = 'ru') => {
+    const response = await axiosInst.get(`/success.json?locale=${locale}`);
     successOrder.value = response.data;
   }
 

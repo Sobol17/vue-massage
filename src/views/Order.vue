@@ -24,10 +24,12 @@ const orderStore = useOrderStore()
 const officeStore = useOfficeStore()
 
 const router = useRouter()
-
+const {t, locale} = useI18n();
+const route = useRoute();
 const sendForm = () => {
   if (orderStore.validateForm()) {
     const requestData = {
+      locale: route.params.locale,
       name: orderStore.orderForm.name,
       phone: orderStore.orderForm.phone,
       email: orderStore.orderForm.email,
@@ -53,10 +55,8 @@ const sendForm = () => {
 }
 
 const showModal = ref(false)
-const route = useRoute();
 
 onMounted(() => {
-  const {t, locale} = useI18n();
   locale.value = route.params.locale
 })
 </script>
@@ -65,10 +65,11 @@ onMounted(() => {
   <main
     :class="{'bg-white min-h-[100vh]' : cartStore.serviceInBasketCount === 0}"
   >
-    <Breadcrumb class="sticky top-0 bg-white pt-4 pb-2 z-[10]"/>
+    <Breadcrumb class="sticky top-0 bg-white pt-4 pb-2 z-[10] px-4"/>
     <div v-if="cartStore.serviceInBasketCount > 0">
       <div class="bg-white p-4">
         <h1 class="text-headline pt-6">{{ $t('order_title') }}</h1>
+
         <SpecialistCard
           class="mt-6"
           :inOrder="true"

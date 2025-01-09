@@ -6,7 +6,7 @@ const props = defineProps({
 
 <template>
 <div class="rounded-full flex-shrink-0 overflow-hidden">
-  <img :src="image" alt="">
+  <img class="w-full h-full" :src="image" alt="">
 </div>
 </template>
 

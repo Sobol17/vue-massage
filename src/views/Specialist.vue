@@ -23,9 +23,10 @@ const {t, locale} = useI18n();
 
 onMounted(() => {
   specialistsStore.getSpecialists({
-    branchId: route.query.branch_id,
+    branchId: route.query.branchId,
     date: route.query.date,
-    time: route.query.time
+    time: route.query.time,
+    locale: route.params.locale
   })
   locale.value = route.params.locale
 })
@@ -95,7 +96,7 @@ onMounted(() => {
 
   <div v-if="cartStore.chosenSpecialist.id !== null && cartStore.serviceInBasketCount === 0 && cartStore.chosenDate === null" class="mt-4 absolute bottom-6 left-4 right-4">
     <AppButton
-      text="Выбрать дату и время"
+      :text="$t('home_date')"
       @click="router.push(
         {
           name: 'dates',

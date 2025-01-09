@@ -7,7 +7,7 @@ export const useDateStore = defineStore('dates', () => {
   const dates = ref([])
   const isLoading = ref(false)
 
-  const getAvailableDates = async ({specialistId = null, branchId = null}) => {
+  const getAvailableDates = async ({specialistId = null, branchId = null, locale = 'ru'}) => {
     isLoading.value = true
     let url = '/dates.json';
     const params = new URLSearchParams();
@@ -19,6 +19,8 @@ export const useDateStore = defineStore('dates', () => {
     if (branchId) {
       params.append('branch_id', branchId);
     }
+
+    params.append('locale', locale);
 
     url += `?${params.toString()}`
     const response = await axiosInst.get(url)

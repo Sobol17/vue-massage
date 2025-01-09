@@ -2,10 +2,161 @@
 import AppInput from "@/components/UI/AppInput.vue";
 import IconArrowRight from "@/components/icons/IconArrowRight.vue";
 import {useOrderStore} from "@/stores/order.js";
-import {ref} from "vue";
+import {ref, watch} from "vue";
+import {useI18n} from "vue-i18n";
 
 const orderStore = useOrderStore()
+const {locale} = useI18n();
+const notifyOptions = ref([]);
 
+watch(() => locale.value,
+  () => {
+    if (locale.value === 'ru') {
+      notifyOptions.value = [
+        {
+          value: "0",
+          text: "Не отправлять",
+        },
+        {
+          value: "1",
+          text: "За 1 час",
+        },
+        {
+          value: "2",
+          text: "За 2 часа",
+        },
+        {
+          value: "3",
+          text: "За 3 часа",
+        },
+        {
+          value: "4",
+          text: "За 4 часа",
+        },
+        {
+          value: "5",
+          text: "За 5 часов",
+        },
+        {
+          value: "6",
+          text: "За 6 часов",
+        },
+        {
+          value: "9",
+          text: "За 9 часов",
+        },
+        {
+          value: "12",
+          text: "За 12 часов",
+        },
+        {
+          value: "15",
+          text: "За 15 часов",
+        },
+        {
+          value: "18",
+          text: "За 18 часов",
+        },
+        {
+          value: "21",
+          text: "За 21 час",
+        },
+        {
+          value: "24",
+          text: "За 24 часов",
+        },
+        {
+          value: "48",
+          text: "За 48 часов",
+        },
+        {
+          value: "72",
+          text: "За 72 часа",
+        },
+        {
+          value: "120",
+          text: "За 120 часов",
+        },
+        {
+          value: "144",
+          text: "За 144 часа",
+        }
+      ]
+    } else {
+      notifyOptions.value = [
+        {
+          value: "0",
+          text: "Don't send",
+        },
+        {
+          value: "1",
+          text: "for 1 hour",
+        },
+        {
+          value: "2",
+          text: "for 2 hours",
+        },
+        {
+          value: "3",
+          text: "for 3 hours",
+        },
+        {
+          value: "4",
+          text: "for 4 hours",
+        },
+        {
+          value: "5",
+          text: "for 5 hours",
+        },
+        {
+          value: "6",
+          text: "for 6 hours",
+        },
+        {
+          value: "9",
+          text: "for 9 hours",
+        },
+        {
+          value: "12",
+          text: "for 12 hours",
+        },
+        {
+          value: "15",
+          text: "for 15 hours",
+        },
+        {
+          value: "18",
+          text: "for 18 hours",
+        },
+        {
+          value: "21",
+          text: "for 21 hour",
+        },
+        {
+          value: "24",
+          text: "for 24 hours",
+        },
+        {
+          value: "48",
+          text: "for 48 hours",
+        },
+        {
+          value: "72",
+          text: "for 72 hours",
+        },
+        {
+          value: "120",
+          text: "for 120 hours",
+        },
+        {
+          value: "144",
+          text: "for 144 hours",
+        }
+      ]
+    }
+  },
+  {immediate: true}
+)
 </script>
 
 <template>
@@ -58,23 +209,12 @@ const orderStore = useOrderStore()
       <p class="text-body-s-regular text-neutral-500 mb-1">{{$t('order_form_send')}}</p>
       <div class="relative">
         <select class="select" v-model="orderStore.orderForm.remind">
-          <option value="0" class="select__option"> Не отправлять</option>
-          <option value="1" class="ng-star-inserted"> За 1 час</option>
-          <option value="2" class="ng-star-inserted"> За 2 часа</option>
-          <option  value="3" class="ng-star-inserted"> За 3 часа</option>
-          <option  value="4" class="ng-star-inserted"> За 4 часа</option>
-          <option  value="5" class="ng-star-inserted"> За 5 часов</option>
-          <option  value="6" class="ng-star-inserted"> За 6 часов</option>
-          <option  value="9" class="ng-star-inserted"> За 9 часов</option>
-          <option  value="12" class="ng-star-inserted"> За 12 часов</option>
-          <option  value="15" class="ng-star-inserted"> За 15 часов</option>
-          <option  value="18" class="ng-star-inserted"> За 18 часов</option>
-          <option  value="21" class="ng-star-inserted"> За 21 час</option>
-          <option  value="24" class="ng-star-inserted"> За 24 часа</option>
-          <option value="48" class="ng-star-inserted"> За 2 дня</option>
-          <option  value="72" class="ng-star-inserted"> За 3 дня</option>
-          <option  value="120" class="ng-star-inserted"> За 5 дней</option>
-          <option  value="144" class="ng-star-inserted"> За 7 дней</option>
+          <option
+            v-for="option in notifyOptions"
+            :value="option.value"
+            class="select__option"
+          > {{ option.text }}
+          </option>
         </select>
 
         <IconArrowRight bg class="absolute right-2 top-1/2 -translate-y-1/2" />

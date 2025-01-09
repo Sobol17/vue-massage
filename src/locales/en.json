@@ -30,5 +30,7 @@
   "order_contacts": "Contacts",
   "review": "Reviews",
   "review_title": "Rate and leave a review",
-  "review_btn": "Send"
+  "review_btn": "Send",
+  "review_thanks_title": "Thank you for your review!",
+  "review_thanks_text": "We appreciate your feedback, it is important for us"
 }

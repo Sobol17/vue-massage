@@ -30,5 +30,7 @@
   "order_contacts": "Контакты",
   "review": "Отзывы",
   "review_title": "Оцените и оставьте отзыв",
-  "review_btn": "Отправить"
+  "review_btn": "Отправить",
+  "review_thanks_title": "Спасибо за ваш отзыв!",
+  "review_thanks_text": "Мы благодарим вас за ваш отзыв, для нас это очень важно"
 }

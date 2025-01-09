@@ -13,7 +13,7 @@ const officeStore = useOfficeStore()
 const route = useRoute()
 
 onMounted(() => {
-  officeStore.getOffices();
+  officeStore.getOffices(route.params.locale);
   const {t, locale} = useI18n();
   locale.value = route.params.locale
 })

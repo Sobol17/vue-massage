@@ -11,6 +11,7 @@ import IconPen from "@/components/icons/IconPen.vue";
 import router from "@/router/index.js";
 import getFullNamedDate from "../utils/getFullNamedDate.js";
 import {useRoute} from "vue-router";
+import {useOfficeStore} from "@/stores/office.js";
 
 const props = defineProps({
   id: Number,
@@ -22,6 +23,8 @@ const props = defineProps({
   inOrder: Boolean,
   inSuccess: Boolean,
 })
+
+const officeStore = useOfficeStore()
 
 const route = useRoute()
 
@@ -44,10 +47,10 @@ const activeDate = (time) => {
 <div>
   <div class="flex items-start gap-x-3 cursor-pointer" @click="cartStore.chosenSpecialist = props">
     <Avatar
-      image="https://placehold.jp/3d4070/ffffff/150x150.png"
+      :image="id !== 0 ? img : officeStore.activeOffice.img"
       class="size-[48px]"
     />
-    <div class="flex flex-col gap-y-1">
+    <div v-if="id !== 0" class="flex flex-col gap-y-1">
       <div class="text-body-m-regular">{{name}}</div>
       <div class="text-body-s-regular text-neutral-500">{{prof}}</div>
       <div class="flex items-center gap-x-1">
@@ -55,6 +58,7 @@ const activeDate = (time) => {
         <p class="text-body-s-regular text-neutral-500">{{reviews}} {{getReviewWord(reviews)}}</p>
       </div>
     </div>
+    <div v-else class="self-center">{{$t('specialist_any')}}</div>
     <div v-if="!inOrder" class="flex gap-x-3 ml-auto self-center">
       <RouterLink :to="`specialists/${id}`">
         <IconInfo class="text-neutral-500" />

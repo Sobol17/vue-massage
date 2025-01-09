@@ -12,6 +12,7 @@ import {useSpecialistsStore} from "@/stores/specialists.js";
 import AppModal from "@/components/modals/AppModal.vue";
 import AppInput from "@/components/UI/AppInput.vue";
 import {useI18n} from "vue-i18n";
+import LangSwitch from "@/components/langSwitch.vue";
 
 const specialistStore = useSpecialistsStore()
 const route = useRoute()
@@ -24,7 +25,8 @@ const form = reactive({
   phone: '',
   email: '',
   comment: '',
-  count: 0
+  count: 5,
+  locale: route.params.locale
 })
 
 const formError = reactive({
@@ -47,10 +49,9 @@ const sendReviewForm = async () => {
   showForm.value = false
   showThanksModal.value = true
 }
-
+const {t, locale} = useI18n();
 onMounted(() => {
-  specialistStore.getSpecialistById(route.params.id)
-  const {t, locale} = useI18n();
+  specialistStore.getSpecialistById(route.params.id, route.params.locale)
   locale.value = route.params.locale
 })
 </script>
@@ -101,24 +102,24 @@ onMounted(() => {
         <div class="flex gap-x-2 items-center justify-center">
           <IconStarGray
             v-for="(i, index) in 5"
-            class="size-8 cursor-pointer text-[#d1d5dc]"
-            :class="{ 'text-[#FFC107]': index + 1 <= form.count }"
+            class=""
+            :class="['size-8 cursor-pointer', index + 1 <= form.count ? 'text-[#FFC107]' : 'text-[#d1d5dc]']"
             @click="form.count = index + 1"
           />
         </div>
         <div>
-          <AppInput v-model="form.name" name="name" placeholder="Ваше имя*" :error="formError.name"/>
+          <AppInput v-model="form.name" name="name" :placeholder="$t('order_form_name')" :error="formError.name"/>
           <p v-if="formError.name" class="text-[12px] text-red pt-1">Указите ваше имя</p>
         </div>
         <div>
-          <AppInput v-model="form.phone" name="phone" placeholder="Номер телефона*" v-mask="'+7 ### ###-##-##'" :error="formError.phone"/>
+          <AppInput v-model="form.phone" name="phone" :placeholder="$t('order_form_phone')" v-mask="'+7 ### ###-##-##'" :error="formError.phone"/>
           <p v-if="formError.phone" class="text-[12px] text-red pt-1">Неверный номер</p>
         </div>
         <div>
-          <AppInput v-model="form.email" name="email" placeholder="Электронная почта*" :error="formError.email"/>
+          <AppInput v-model="form.email" name="email" placeholder="Email" :error="formError.email"/>
           <p v-if="formError.email" class="text-[12px] text-red pt-1">Укажите ваш email</p>
         </div>
-        <textarea v-model="form.comment" class="border border-solid outline-none border-neutral-300 rounded-[16px] p-4 resize-none h-[120px]" placeholder="Комментарий"></textarea>
+        <textarea v-model="form.comment" class="border border-solid outline-none border-neutral-300 rounded-[16px] p-4 resize-none h-[120px]" :placeholder="$t('order_form_comment')"></textarea>
       </div>
       <AppButton @click="sendReviewForm" class="w-full mt-6" :text="$t('review_btn')" />
     </AppModal>
@@ -127,9 +128,9 @@ onMounted(() => {
       @close="showThanksModal = false"
       v-if="showThanksModal"
     >
-      <p class="text-headline">Спасибо за ваш отзыв!</p>
+      <p class="text-headline">{{ $t('review_thanks_title') }}</p>
       <div class="mt-4 text-body-m-regular text-center">
-        Мы благодарим вас за ваш отзыв, для нас это очень важно
+        {{ $t('review_thanks_text') }}
       </div>
       <AppButton @click="showThanksModal = false" class="w-full mt-6" text="Закрыть" />
     </AppModal>

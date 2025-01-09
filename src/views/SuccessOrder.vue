@@ -38,7 +38,7 @@ const copyLink = async () => {
 const route = useRoute();
 
 onMounted(() => {
-  successOrderStore.getSuccessOrder();
+  successOrderStore.getSuccessOrder(route.params.locale);
   const {t, locale} = useI18n();
   locale.value = route.params.locale
 })
