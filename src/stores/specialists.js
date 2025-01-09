@@ -19,7 +19,7 @@ export const useSpecialistsStore = defineStore('specialists', () => {
     await axiosInst.post(`/review/${specialistId}`, review)
   }
 
-  const getSpecialists = async ({date = null, time = null, branchId = null, locale = 'ru'}) => {
+  const getSpecialists = async ({date = null, time = null, branchId = null, locale = 'ru', serviceIds = []}) => {
     isLoading.value = true
     let url = '/specialists.json';
     const params = new URLSearchParams();
@@ -34,6 +34,10 @@ export const useSpecialistsStore = defineStore('specialists', () => {
 
     if (branchId) {
       params.append('branch_id', branchId);
+    }
+
+    if (serviceIds.length > 0) {
+      params.append('service_ids', serviceIds);
     }
 
     params.append('locale', locale);

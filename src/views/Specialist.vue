@@ -11,11 +11,12 @@ import {useRoute, useRouter} from "vue-router";
 import {onMounted} from "vue";
 import Loader from "@/components/UI/Loader.vue";
 import {useI18n} from "vue-i18n";
+import {useOfficeStore} from "@/stores/office.js";
 
 
 const specialistsStore = useSpecialistsStore()
 const cartStore = useCartStore()
-
+const officeStore = useOfficeStore()
 const route = useRoute()
 
 const router = useRouter()
@@ -23,10 +24,11 @@ const {t, locale} = useI18n();
 
 onMounted(() => {
   specialistsStore.getSpecialists({
-    branchId: route.query.branchId,
+    branchId: officeStore.activeOffice?.id,
     date: route.query.date,
     time: route.query.time,
-    locale: route.params.locale
+    locale: route.params.locale,
+    serviceIds: route.query.serviceIds
   })
   locale.value = route.params.locale
 })

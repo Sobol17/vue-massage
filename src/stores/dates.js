@@ -7,7 +7,7 @@ export const useDateStore = defineStore('dates', () => {
   const dates = ref([])
   const isLoading = ref(false)
 
-  const getAvailableDates = async ({specialistId = null, branchId = null, locale = 'ru'}) => {
+  const getAvailableDates = async ({specialistId = null, branchId = null, locale = 'ru', serviceIds = []}) => {
     isLoading.value = true
     let url = '/dates.json';
     const params = new URLSearchParams();
@@ -18,6 +18,10 @@ export const useDateStore = defineStore('dates', () => {
 
     if (branchId) {
       params.append('branch_id', branchId);
+    }
+
+    if (serviceIds.length > 0) {
+      params.append('service_ids', serviceIds);
     }
 
     params.append('locale', locale);

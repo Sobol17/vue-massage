@@ -112,7 +112,7 @@ onMounted(() => {
           <p v-if="formError.name" class="text-[12px] text-red pt-1">Указите ваше имя</p>
         </div>
         <div>
-          <AppInput v-model="form.phone" name="phone" :placeholder="$t('order_form_phone')" v-mask="'+7 ### ###-##-##'" :error="formError.phone"/>
+          <AppInput v-model="form.phone" name="phone" :placeholder="$t('order_form_phone')" :error="formError.phone"/>
           <p v-if="formError.phone" class="text-[12px] text-red pt-1">Неверный номер</p>
         </div>
         <div>
@@ -132,7 +132,7 @@ onMounted(() => {
       <div class="mt-4 text-body-m-regular text-center">
         {{ $t('review_thanks_text') }}
       </div>
-      <AppButton @click="showThanksModal = false" class="w-full mt-6" text="Закрыть" />
+      <AppButton @click="showThanksModal = false" class="w-full mt-6" :text="route.params.locale === 'ru' ? 'Закрыть' : 'Close'" />
     </AppModal>
   </main>
 </template>

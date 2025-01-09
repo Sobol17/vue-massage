@@ -9,9 +9,11 @@ import {useRoute, useRouter} from "vue-router";
 import {useCartStore} from "@/stores/cart.js";
 import {useDateStore} from "@/stores/dates.js";
 import {useI18n} from "vue-i18n";
+import {useOfficeStore} from "@/stores/office.js";
 
 const cartStore = useCartStore()
 const datesStore = useDateStore()
+const officeStore = useOfficeStore()
 const router = useRouter()
 
 const activeTimeSlots = computed(() => {
@@ -24,8 +26,9 @@ const {t, locale} = useI18n();
 onMounted(() => {
   datesStore.getAvailableDates({
     specialistId: route.query.specialist,
-    branchId: route.query.branchId,
-    locale: route.params.locale
+    branchId: officeStore.activeOffice?.id,
+    locale: route.params.locale,
+    serviceIds: route.query.serviceIds
   })
   locale.value = route.params.locale
 })

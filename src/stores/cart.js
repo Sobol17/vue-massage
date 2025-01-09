@@ -53,14 +53,20 @@ export const useCartStore = defineStore('cart', () => {
         link: {
           name: 'dates',
           query: {
-            specialist: chosenSpecialist.value.id
+            specialist: chosenSpecialist.value.id,
+            serviceIds: chosenServices.value.map(item => item.id)
           }
         }
       }
     } else {
       return {
         title: route.params.locale === 'ru' ? 'Выбрать специалиста' : 'Select specialist',
-        link: 'specialists'
+        link: {
+          name: 'specialists',
+          query: {
+            serviceIds: chosenServices.value.map(item => item.id),
+          }
+        }
       }
     }
   })

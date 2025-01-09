@@ -181,7 +181,6 @@ watch(() => locale.value,
         v-model="orderStore.orderForm.phone"
         name="tel"
         :placeholder="$t('order_form_name')"
-        v-mask="'+7 ### ###-##-##'"
         :error="orderStore.errors.phone"
       />
       <p v-if="orderStore.errors.phone" class="text-[12px] text-red pt-1">Неверный номер</p>
