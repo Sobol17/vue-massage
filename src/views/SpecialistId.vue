@@ -73,9 +73,9 @@ onMounted(() => {
     </div>
 
     <div class="bg-white rounded-[16px] mt-3 p-4">
-      <div class="text-headline">Отзывы</div>
+      <div class="text-headline">{{ $t('reviews') }}</div>
       <div @click="showForm = true" class="bg-neutral-100 text-center rounded-[16px] mt-2 p-4">
-        <p>Оцените и оставьте отзыв</p>
+        <p>{{$t('review_title')}}</p>
         <div class="flex gap-x-2 items-center justify-center">
           <IconStarGray v-for="i in 5" class="size-8 cursor-pointer text-[#d1d5dc]" />
         </div>
@@ -96,7 +96,7 @@ onMounted(() => {
       v-if="showForm"
       @close="showForm = false"
     >
-      <p class="text-headline">Оцените работу мастера</p>
+      <p class="text-headline">{{$t('review_title')}}</p>
       <div class="flex flex-col gap-y-4 mt-6">
         <div class="flex gap-x-2 items-center justify-center">
           <IconStarGray
@@ -120,7 +120,7 @@ onMounted(() => {
         </div>
         <textarea v-model="form.comment" class="border border-solid outline-none border-neutral-300 rounded-[16px] p-4 resize-none h-[120px]" placeholder="Комментарий"></textarea>
       </div>
-      <AppButton @click="sendReviewForm" class="w-full mt-6" text="Отправить" />
+      <AppButton @click="sendReviewForm" class="w-full mt-6" :text="$t('review_btn')" />
     </AppModal>
 
     <AppModal

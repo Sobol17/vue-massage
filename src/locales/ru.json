@@ -27,5 +27,8 @@
   "order_form_send": "Напоминание",
   "order_btn": "Записаться",
   "order_success": "Вы записаны",
-  "order_contacts": "Контакты"
+  "order_contacts": "Контакты",
+  "review": "Отзывы",
+  "review_title": "Оцените и оставьте отзыв",
+  "review_btn": "Отправить"
 }

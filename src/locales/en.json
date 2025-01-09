@@ -27,5 +27,8 @@
   "order_form_send": "Notify",
   "order_btn": "Book now",
   "order_success": "You have been booked",
-  "order_contacts": "Contacts"
+  "order_contacts": "Contacts",
+  "review": "Reviews",
+  "review_title": "Rate and leave a review",
+  "review_btn": "Send"
 }
