@@ -1,8 +1,7 @@
 import router from '@/router'
 import axios from 'axios'
 const axiosInst = axios.create({
-	baseURL: '/vue-massage',
-	// baseURL: '',
+	baseURL: '',
 	headers: {
 		Accept: 'application/json',
 	},
